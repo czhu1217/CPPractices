@@ -1,4 +1,5 @@
 #include <stdio.h>
+//testing
 using namespace std;
 int d, v, w, key[10], t[6], counter;
 bool work;
