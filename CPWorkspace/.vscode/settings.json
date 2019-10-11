@@ -1,0 +1,12 @@
+{
+    "python.pythonPath": "C:\\Users\\xuhon\\AppData\\Local\\Programs\\Python\\Python37\\python.exe",
+    "files.associations": {
+        "vector": "cpp",
+        "iostream": "cpp",
+        "ostream": "cpp",
+        "queue": "cpp",
+        "tuple": "cpp",
+        "xutility": "cpp",
+        "algorithm": "cpp"
+    }
+}
