@@ -1,40 +1,36 @@
 #include <stdio.h>
-//testing
+#include <queue>
+#include <algorithm>
+#include <vector>
+
 using namespace std;
-int d, v, w, key[10], t[6], counter;
+int d, v, w,  t[6], counter;
+vector<int> key;
 bool work;
+queue<pair<int, int>> q;
 int main()
 {
     scanf("%d", &w);
     scanf("%d", &d);
+    key.resize(d);
     for (int i = 0; i < d; i++)
     {
         scanf("%d", &key[i]);
     }
+    sort(key.begin(),key.end());
     scanf("%d", &v);
     for (int i = 0; i < v; i++)
     {
         scanf("%d", &t[i]);
     }
-    for (int k = 0; k < v; k++)
-    {
-        while (t[k] != 1)
-        {
-            for(int i=0;i<d;i++){
-                if(t[k]%key[i]==0){
-                    t[k] /= key[i];
-                    counter++;
-                }
-            }
-
-
+    while(!q.empty()){
+        int t = q.back().first;
+        q.pop();
+        for(int i=key.size()-1;i>=0;i--){
+            if(t%key[i]==0) q.push(make_pair(t/key[i], counter));
         }
-    }
-}
 
-void reduce(){
-    if(counter>w) return;
-    
+    }
 
 }
 
