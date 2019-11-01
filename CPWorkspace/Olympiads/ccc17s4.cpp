@@ -81,7 +81,6 @@ int main()
             {
 
                 days++;
-                printf("wrong %d", i);
             }
 
         }
