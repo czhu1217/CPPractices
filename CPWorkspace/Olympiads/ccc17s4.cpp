@@ -4,16 +4,14 @@
 using namespace std;
 
 int n, m, par[100005], rnk[100005];
-long long int d;
-int days = 0;
+int d, cnt;
+int days;
 struct ed
 {
     int a, b, c, d;
-    friend bool operator<(ed &a, ed &b)
+    bool operator<(const ed &e) const
     {
-        if (a.c == b.c)
-            return b.d < a.d;
-        return a.c < b.c;
+        return c < e.c || (c == e.c && d < e.d);
     }
 };
 int find(int n)
@@ -45,88 +43,71 @@ bool merge(int a, int b)
 }
 vector<ed> aa;
 bool ehc = false;
-int t = -1;
+int maxc;
 int main()
 {
-    scanf("%d %d %lld", &n, &m, &d);
-    int cnt = n, mi;
-    long long cost;
+    scanf("%d %d %d", &n, &m, &d);
     for (int i = 1; i <= m; i++)
     {
         int a, b, c;
 
         scanf("%d %d %d", &a, &b, &c);
-        if (i < n && c > d && !ehc)
-        {
-            c -= d;
-            ehc = true;
-        }
-        aa.push_back({a, b, c, i < n});
+        if (i < n)
+            aa.push_back({a, b, c, 0});
+        else
+            aa.push_back({a, b, c, 1});
     }
     sort(aa.begin(), aa.end());
+
     for (int i = 1; i <= n; i++)
     {
         par[i] = i;
     }
+    int i;
+        maxc = 0;
 
-    for (int i = 0; i < aa.size(); i++)
+    for (i = 0; i < aa.size(); i++)
     {
-        if (merge(aa[i].a, aa[i].b))
+        if (cnt == n - 1)
         {
-            cost+=aa[i].c;
-
-            if (!aa[i].d)
-            {
-                days++;
-            }
-            cnt--;
-        }
-        if (cnt <= 1)
-        {
-            t = i;
-            mi = days;
             break;
         }
-    }
-    int t1 = t;
-    long long co;
-    if (!ehc)
-    {
-        while (aa[++t].c - d < aa[t1].c)
+        if (merge(aa[i].a, aa[i].b))
         {
-            days = 0;
-            cnt = n;
-            aa[t].c -= d;
-            sort(aa.begin(), aa.end());
-            for (int i = 1; i <= n; i++)
+            maxc = aa[i].c;
+            cnt++;
+
+            if (aa[i].d)
             {
-                par[i] = i;
+
+                days++;
+                printf("wrong %d", i);
             }
 
-            for (int i = 0; i < aa.size(); i++)
+        }
+    }
+    if (aa[i - 1].d)
+    {
+        for (int i = 1; i <= n; i++)
+        {
+            par[i] = i;
+        }
+        for (int i = 0; i < aa.size(); i++)
+        {
+            auto e = aa[i];
+            if (find(e.a) != find(e.b))
             {
-                if (merge(aa[i].a, aa[i].b))
+                if (e.c < maxc || (e.c == maxc && !e.d))
+                    merge(e.a, e.b);
+                else if (!e.d && e.c <= d)
                 {
-                    co+=aa[i].c;
-
-                    if (!aa[i].d)
-                    {
-                        days++;
-                    }
-                    cnt--;
+                    printf("%d\n", days - 1);
+                    return 0;
                 }
-                if (cnt <= 1)
-                {
-                    break;
-                }
-            }
-            if(co<cost){
-                cost = co;
-                mi = days;
             }
         }
     }
 
-    printf("%d\n", mi);
+    printf("%d\n", days);
     return 0;
 }
