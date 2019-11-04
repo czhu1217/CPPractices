@@ -7,11 +7,7 @@ int n, m, s, si, cnt, lv[100005], step = 0;
 vector<vector<int>> adj(1);
 map<int, bool> pho;
 queue<int> op, path;
-void clear( std::queue<int> &q )
-{
-   std::queue<int> empty;
-   std::swap( q, empty );
-}
+
 int main()
 {
     scanf("%d %d", &n, &m);
