@@ -4,28 +4,33 @@ using namespace std;
 int main()
 {
     long long int n, pair, middle, left, right;
-    long long int idk = 0, cnt = 0;
-    scanf("%lld", &n);
+    long long int cnt = 0;
+    scanf(" %lld", &n);
+    long int mx = sqrt(2 * n);
+    for (int i = 1; i <= mx; i++)
+    {
 
-    for (long long int i = 1; i <= n; i++){
-        if(i%2!=0){
-            if(n%i!=0) continue;
-            middle = n/i;
-            left = middle - i/2;
-            right = middle + i/2;
-            if(left>0&&right<=n) cnt++;
+        if (i % 2 != 0)
+        {
+            if (n % i == 0)
+            {
+
+                cnt++;
+            }
         }
-        else{
-            pair = n/(i/2);
-            if(pair%2==0){
+        else
+        {
+            if (n % (i / 2) != 0)
+            {
                 continue;
             }
-            middle = pair/2;
-            left = middle - i/2;
-            right = middle + i/2 + 1;
-            if(left>0&&right<=n) cnt++;
+            pair = n / (i / 2);
+            if (pair % 2 != 0)
+            {
+                cnt++;
+            }
         }
     }
-    printf("%lld", cnt);
+    printf("%lld\n", cnt);
     return 0;
 }
