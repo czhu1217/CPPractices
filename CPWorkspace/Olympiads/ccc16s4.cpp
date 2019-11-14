@@ -10,9 +10,9 @@ void combine2(int e){
     vector<lld>::iterator it = a.begin()+e+1;
     a.erase(it);
     }
-void combine(int e){
-    combine(e);
-    combine(e);
+void combine3(int e){
+    combine2(e);
+    combine2(e);
 }
 bool pos (int i){
     if(a[i+2] )
