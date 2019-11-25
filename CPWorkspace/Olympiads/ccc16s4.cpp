@@ -3,20 +3,10 @@
 #define lld long long int
 using namespace std;
 const int INF = 1000001;
-int N, sml;
+int N;
+bool ar[400][400];
+lld ans = 0;
 vector<lld> a;
-void combine2(int e){
-    a[e]+=a[e+1];
-    vector<lld>::iterator it = a.begin()+e+1;
-    a.erase(it);
-    }
-void combine3(int e){
-    combine2(e);
-    combine2(e);
-}
-bool pos (int i){
-    if(a[i+2] )
-}
 int main()
 {
     scanf("%d", &N);
@@ -24,10 +14,8 @@ int main()
     for (int i = 0; i < N; i++)
     {
         scanf("%d ", &a[i]);
-        if(a[i]<INF&&pos(i)){
-            sml = a[i];
-        }
-
+        if(a[i]>ans) ans = a[i];
     }
+
 
 }
