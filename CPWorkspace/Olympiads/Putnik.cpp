@@ -1,7 +1,8 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <algorithm>
+#include <cstring>
 
 using namespace std;
-
 const int MM = 1505;
 int arr[MM][MM], N, dp[MM][MM], ans = 0x3f3f3f3f;
 
