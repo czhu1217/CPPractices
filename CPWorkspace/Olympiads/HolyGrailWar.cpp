@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include <algorithm>
+using namespace std;
 
 const int MM = 100002;
 #define lc id<<1
