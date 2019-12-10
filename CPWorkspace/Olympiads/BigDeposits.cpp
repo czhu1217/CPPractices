@@ -1,3 +1,4 @@
+//supposed to be done using binary search but used hard core math instead... worked anyways
 #include <stdio.h>
 #include <cmath>
 #include <iostream>
