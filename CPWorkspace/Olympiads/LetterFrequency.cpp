@@ -12,7 +12,7 @@ string s;
 char lt;
 int main()
 {
-    memset(pre, 0, sizeof(pre));
+    cin.sync_with_stdio(0);cin.tie(0);
     getline(cin, s);
     for (int i = 1; i <= s.length(); i++)
     {
