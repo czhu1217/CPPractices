@@ -7,7 +7,6 @@
 using namespace std;
 long long n, mx, counter, previ, t;
 long long num[2005], amt[4005];
-map<int, int> m;
 
 int main()
 {
