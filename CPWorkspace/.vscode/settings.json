@@ -8,6 +8,7 @@
         "tuple": "cpp",
         "xutility": "cpp",
         "algorithm": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "map": "cpp"
     }
 }
