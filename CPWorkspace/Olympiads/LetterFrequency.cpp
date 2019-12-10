@@ -39,14 +39,7 @@ int main()
                 pre[j][i] = pre[j][i - 1];
             }
         }
-        for(int i=0;i<26;i++){
-        for(int j=0;j<s.size();j++){
-            cout << pre[i][j] << " ";
-        }
-        cout << "\n";
-    }
 
-        cout << "\n";
 
     }
     cin >> Q;
