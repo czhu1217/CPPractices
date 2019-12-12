@@ -50,13 +50,10 @@ int main()
                 }
                 if(k==N+1){
                     I = i;
-                    // shdBrk = true;
                     break;
                 }
             }
         }
-        //   if (shdBrk)
-        //     continue;
         for(int i=1;i<=N;i++){
             int j;
             for(j=1;j<=N;j++){
