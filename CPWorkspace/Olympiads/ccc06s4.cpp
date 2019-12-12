@@ -44,25 +44,25 @@ int main()
             for(j=1;j<=N;j++){
                 if(a[i][j]!=j) break;
             }
-            if(j==N){
+            if(j==N+1){
                 for(k=1;k<=N;k++){
                     if(a[k][i]!=k) break;
                 }
-                if(k==N){
+                if(k==N+1){
                     I = i;
-                    shdBrk = true;
+                    // shdBrk = true;
                     break;
                 }
             }
         }
-          if (shdBrk)
-            continue;
+        //   if (shdBrk)
+        //     continue;
         for(int i=1;i<=N;i++){
             int j;
             for(j=1;j<=N;j++){
                 if(a[i][j]==I&&a[j][i]==I) break;
             }
-            if(j==N){
+            if(j==N+1){
                 shdBrk = true;
                 break;
             }
