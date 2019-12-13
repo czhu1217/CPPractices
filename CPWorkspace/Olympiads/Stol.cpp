@@ -11,7 +11,6 @@ char ch;
 int main()
 {
     cin >> r >> c;
-    // cout << r << c;
 
     for (int i = 0; i < r; i++)
     {
@@ -26,24 +25,15 @@ int main()
                 b[i][j] = false;
         }
     }
-    // for (int i = 0; i < r; i++)
-    // {
-    //     for (int j = 0; j < c; j++)
-    //     {
-    //         cout << b[i][j] << " ";
-    //     }
-    //     cout << endl;
-    // }
+
     sum = 0;
-            msum = 0;
+    msum = 0;
     for (cl = 0; cl < c; cl++)
     {
-        // cout << "cl" << cl << "\n";
         start = 0;
         sum = 0;
         for (cr = cl; cr < c; cr++)
         {
-            // cout << "cr" << cr << "\n";
             for (int i = 0; i < r; i++)
             {
                 if (b[i][cr])
@@ -55,14 +45,9 @@ int main()
                     op[i] = 0;
                 }
             }
-            // for (int i = 0; i < r; i++)
-            // {
-            //     cout << op[i] << endl;
-            // }
-            
             for (int i = 0; i < r; i++)
             {
-                if (i!=0&&op[i] == op[i - 1] && op[i - 1] != 0)
+                if (i != 0 && op[i] == op[i - 1] && op[i - 1] != 0)
                 {
                     sum = ((i - start + 1) + op[i]) * 2;
                 }
@@ -77,11 +62,9 @@ int main()
                     msum = sum;
                 }
             }
-
-            // cout << "sum: " << sum << endl;
         }
         memset(op, 0, sizeof(op));
     }
-    cout << msum-1;
+    cout << msum - 1;
     return 0;
 }
