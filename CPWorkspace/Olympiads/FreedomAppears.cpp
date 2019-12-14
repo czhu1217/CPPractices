@@ -1,54 +1,53 @@
+//to do
 #include <stdio.h>
 #include <vector>
-#include <tuple>
-#include <iostream>
-#include <math.h>
+#include <map>
 using namespace std;
-int x, y, z, n, counter = 0;
-vector<tuple<int, int, int>> pi;
-float distance(int x, int y, int z)
+struct win
 {
-    return sqrt(x * x + y * y + z * z);
-}
-
+    int x1, x2, y1, y2, v;
+} w[1001];
+int n, t, cntx, cnty, dif[2002][2002];
+map<int, int> cx, cy;
+vector<int> rx, ry;
+long long ans = 0;
 int main()
 {
-    int a, b, c;
-
-    scanf("%d %d %d %d", &x, &y, &z, &n);
-    for (int i = 0; i < n; i++)
+    scanf("%d %d", &n, &t);
+    for (int i = 1; i <= n; i++)
     {
-        int flag = false;
-        scanf("%d %d %d", &a, &b, &c);
-        float dis = distance(a - x, b - y, c - z);
-        for (int i = 0; i < pi.size(); i++)
+        scanf("%d %d %d %d %d", &w[i].x1, &w[i].y1, &w[i].x2, &w[i].y2, &w[i].v);
+        cx[w[i].x1] = cx[w[i].x2] = 0;
+        cy[w[i].y1] = cy[w[i].y2] = 0;
+    }
+    cntx = 1;
+    cnty = 1;
+    for (auto &it : cx)
+    {
+        it.second = cntx++;
+        rx.push_back(it.first);
+    }
+    for (auto &it : cy)
+    {
+        it.second = cnty++;
+        ry.push_back(it.first);
+    }
+    for (int i = 1; i <= n; i++)
+    {
+        dif[cx[w[i].x1]][cy[w[i].y1]] += w[i].v;
+        dif[cx[w[i].x2]][cy[w[i].y2]] += w[i].v;
+        dif[cx[w[i].x1]][cy[w[i].y2]] -= w[i].v;
+        dif[cx[w[i].x2]][cy[w[i].y1]] -= w[i].v;
+    }
+    for (int i = 1; i < cntx; i++)
+    {
+        for (int j = 1; j < cnty; j++)
         {
-            int m = get<0>(pi[i]), n = get<1>(pi[i]), o = get<2>(pi[i]);
-
-            printf("%d %d %d \n %d %d %d \n \n", a, b, c, m, n, o);
-            printf("%f %f %f \n", dis,distance(a - m, b - n, c - o), distance(m - x, n - y, o - z) );
-            cout << "dif " << distance(a - m, b - n, c - o) + distance(m - x, n - y, o - z) - dis << " " << distance(a - m, b - n, c - o) + dis - distance(m - x, n - y, o - z) << endl;
-            bool b1 = distance(a - m, b - n, c - o) + distance(m - x, n - y, o - z) - dis < 0.0000001;
-            bool b2 = distance(a - m, b - n, c - o) + distance(m - x, n - y, o - z) - dis > -0.0000001;
-            bool b3 = distance(a - m, b - n, c - o) + dis < distance(m - x, n - y, o - z) +0.0000001;
-            bool b4 = distance(a - m, b - n, c - o) + dis > distance(m - x, n - y, o - z) - 0.0000001;
-            if((b1&&b2)||(b3&&b4)){
-                flag = true;
-                break;
-            }
-
-
-            
-        }
-
-        if (!flag)
-        {
-            pi.push_back(make_tuple(a, b, c));
-            counter++;
+            dif[i][j] += dif[i - 1][j] + dif[i][j - 1] - dif[i - 1][j - 1];
+            if (dif[i][j] >= t)
+                ans += 1LL * (rx[i] - rx[i - 1]) * (ry[j] - ry[j - 1]);
         }
     }
-
-    printf("%d\n", counter);
-
+    printf("%lld\n", ans);
     return 0;
 }
