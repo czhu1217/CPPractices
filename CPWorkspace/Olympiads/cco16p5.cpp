@@ -65,6 +65,7 @@ long long getArea(int d)
     return ans;
 }
 int main(){
+    cin.sync_with_stdio(0); cin.tie(0);
     cin >> N >> M >>K;
     for(int i=1;i<=K;i++){
         cin >> x[i] >> y[i];
