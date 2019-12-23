@@ -1,3 +1,4 @@
+//wireless
 #include <iostream>
 #include <algorithm>
 #include <math.h>
@@ -7,7 +8,7 @@ int main(){
     cin >> N >> M >> K;
     for(int i=0, x, y, r, b;i<K;i++){
         cin >> x >> y >> r >> b;
-        for(int j=max(1, x-r);j<min(N, x+r);j++){
+        for(int j=max(1, x-r);j<=min(N, x+r);j++){
             int d = sqrt(r*r-(x-j)*(x-j));
             dif[j][(max(1, y-d))] +=b;
             dif[j][min(M+1, y+d+1)] -=b;
