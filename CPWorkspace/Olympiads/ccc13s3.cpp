@@ -65,7 +65,7 @@ int main()
         {
             ar[b] += 3;
         }
-        else
+        else //?
         {
             ar[a]++;
             ar[b]++;
