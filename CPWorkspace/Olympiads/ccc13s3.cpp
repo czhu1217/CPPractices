@@ -3,68 +3,80 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-int fav, done, a, b, av, bv, cnt=0, counter=0, mx=0, win;
+int fav, done, a, b, av, bv, cnt = 0, counter = 0, mx = 0, win;
 int ar[5];
 bool played[5][5];
 vector<pair<int, int>> v;
 
-void recur(){
+void recur()
+{
     mx = 0;
-    if(v.empty()){
-        for(int i=1;i<=4;i++){
-    
-            if(ar[i]>=mx){
-                if(ar[i]>mx){             
-                     win = i;
-                    mx = ar[i];
-                } 
-                else{
-                    if(win==fav){
-                        win = i;
-                    }
+    if (v.empty())
+    {
+        for (int i = 1; i <= 4; i++)
+        {
 
+            if (ar[i] >= mx)
+            {
+                if (ar[i] > mx)
+                {
+                    win = i;
+                    mx = ar[i];
                 }
+                else if(win==fav) win = i;
+                        
             }
         }
         counter++;
-        if(win==fav) cnt++;
+        if (win == fav)
+            cnt++;
         return;
     }
     int x, y;
     x = v.back().first;
     y = v.back().second;
     v.pop_back();
-    ar[x]+=3;
+    ar[x] += 3;
     recur();
-    ar[x]-=3;
-    ar[y]+=3;
+    ar[x] -= 3;
+    ar[y] += 3;
     recur();
-    ar[y]-=3;
-    ar[x]++;ar[y]++;
+    ar[y] -= 3;
+    ar[x]++;
+    ar[y]++;
     recur();
-    ar[x]--;ar[y]--;
+    ar[x]--;
+    ar[y]--;
     v.push_back({x, y});
-
 }
-int main(){
+int main()
+{
     cin >> fav >> done;
-    for(int i=0;i<done;i++){
+    for (int i = 0; i < done; i++)
+    {
         cin >> a >> b >> av >> bv;
         played[a][b] = true;
         played[b][a] = true;
-        if(av>bv){
-            ar[a]+=3;
+        if (av > bv)
+        {
+            ar[a] += 3;
         }
-        else if(bv>av){
-            ar[b]+=3;
+        else if (bv > av)
+        {
+            ar[b] += 3;
         }
-        else{
-            ar[a]++;ar[b]++;
+        else
+        {
+            ar[a]++;
+            ar[b]++;
         }
     }
-    for(int i=1;i<=4;i++){
-        for(int j=1;j<i;j++){
-            if(!played[i][j]){
+    for (int i = 1; i <= 4; i++)
+    {
+        for (int j = 1; j < i; j++)
+        {
+            if (!played[i][j])
+            {
                 v.push_back({i, j});
             }
         }
@@ -73,4 +85,3 @@ int main(){
     cout << cnt << "\n";
     return 0;
 }
-
