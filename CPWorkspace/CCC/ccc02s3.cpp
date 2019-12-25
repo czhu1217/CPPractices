@@ -7,6 +7,7 @@ int r, c, m, cnt, dir, posx=0, posy=0;
 char  op[30002];
 bool map[377][82], b[377][82];
 bool foward(int dir){
+    // printf("moving toward %d\n", dir);
     switch(dir){
         case 0: posy--;
         break;
@@ -18,9 +19,11 @@ bool foward(int dir){
         break;
     }
     if(posy<0||posx<0||posy>r-1||posx>c-1||!map[posy][posx]) return false;
+    // printf("successfully moved\n");
     return true;
 }
 bool trav(int r, int c,int dir){
+    // printf("at %d %d, facing %d\n", r, c, dir);
     posy = r; posx = c;
     for(int i=0; i<m;i++){
        
@@ -31,10 +34,13 @@ bool trav(int r, int c,int dir){
             }
         }
         else if(op[i]=='L'){
-            dir = (dir-1)%4;
+            dir = dir-1;
+            if(dir<0) dir+=4;
+            // cout << "now facing " << dir << "\n" ;
         }
         else{
             dir = (dir+1)%4;
+            // cout << "now facing " << dir << "\n";
         } 
     }
     b[posy][posx] = true;
