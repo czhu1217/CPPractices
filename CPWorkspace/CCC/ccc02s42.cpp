@@ -5,7 +5,7 @@
 #include <vector>
 #include <cstring>
 using namespace std;
-int M, Q, dp[105], st[9][105]; 
+long M, Q, dp[105], st[9][105]; 
 string s[105];
 int rmq(int x, int y){
     if(x>y) return 0;
