@@ -5,29 +5,42 @@
 #include <vector>
 #include <cstring>
 using namespace std;
-int M, Q, dp[105], st[9][105]; 
+int M, Q, dp[105],  pre[105], spd[105]; 
 string s[105];
-vector<string> name;
-int rmq(int x, int y){
-    if(x>y) return 0;
-    int k=log2(y-x+1);
-    return max(st[k][x], st[k][y-(1<<k)+1]);
-}
+
 int main(){
     cin >> M >> Q;
-    for(int i=1;i<=Q;i++){
-        cin >> s[i] >> st[0][i];
+    memset(dp, 0x3f, sizeof(dp));
+    for(int i=0;i<Q;i++){
+        cin >> s[i] >> spd[i];
     }
+    dp[0] = 0;
 
-    for(int i=1;i<9;i++)
-        for(int j=1;j+(1<<i)-1<=Q;j++)
-            st[i][j] = max(st[i-1][j], st[i-1][j+(1<<(i-1))]);
-    for(int i=1, j=0;i<=Q;i++){
-        int limit = ((i+M-1)/M-1)*M;
-        if(j<i-M) j=i-M;
-        while(j<limit&&dp[j]+rmq(j+1, i) <= dp[j+1]+rmq(j+2, i)) j++;
-        dp[i] = max(dp[i], dp[j] + rmq(j+1, i));
+    for(int i=0;i<Q;i++){
+        int mx = 0;
+        for(int j=0;j+i<=Q&&j<M;j++){
+            mx = max(mx, spd[i+j]);
+            int alt = dp[i] + mx;
+            if(alt<dp[i+j+1]){
+                dp[i+j+1] = alt;
+                pre[i+j+1] = i;
+            }
+        }
     }
-    printf("%lld\n", dp[Q]);
+    cout << "Total Time: " << dp[Q] << "\n";
+    int idx = Q;
+    vector<int> v;
+    while(true){
+        v.push_back(idx);
+        if(idx==0)break;
+        idx = pre[idx];
+    }
+    reverse(v.begin(), v.end());
+       for (int i = 0; i < v.size() - 1; i++){
+        for (int j = v[i]; j < v[i + 1]; j++){
+            cout << s[j] << " ";
+        }
+        cout << "\n";
+    }
     return 0;
 }
