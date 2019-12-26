@@ -10,17 +10,12 @@ bool room[26][26], vis[26][26];
 vector<int> rm;
 int dfs(int x, int y, int id)
 {
-    // printf("at %d %d\n", x, y);
     vis[x][y] = true;
     cnt++;
-    if (x - 1 >= 0 && x-1<r&& room[x - 1][y] && !vis[x - 1][y])
-        dfs(x - 1, y, id);
-    if (x + 1 <= r && x+1>0&& room[x + 1][y] && !vis[x + 1][y])
-        dfs(x + 1, y, id);
-    if (y + 1 <= r && y+1>0&&room[x][y + 1] && !vis[x][y + 1])
-        dfs(x, y + 1, id);
-    if (y - 1 >= 0 && y-1<r&&room[x][y - 1] && !vis[x][y - 1])
-        dfs(x, y - 1, id);
+    if (x - 1 >= 0 && x-1<r&& room[x - 1][y] && !vis[x - 1][y])   dfs(x - 1, y, id); 
+    if (x + 1 <= r && x+1>0&& room[x + 1][y] && !vis[x + 1][y]) dfs(x + 1, y, id); 
+    if (y + 1 <= r && y+1>0&&room[x][y + 1] && !vis[x][y + 1])  dfs(x, y + 1, id);  
+    if (y - 1 >= 0 && y-1<r&&room[x][y - 1] && !vis[x][y - 1])  dfs(x, y - 1, id);
     return cnt;
 }
 int main()
@@ -33,10 +28,7 @@ int main()
         {
             char ch;
             scanf(" %c", &ch);
-            if (ch == '.')
-            {
-                room[i][j] = true;
-            }
+            if (ch == '.') room[i][j] = true;
         }
     }
 
@@ -48,10 +40,8 @@ int main()
             {
                 cnt = 0;
                 id++;
-                // printf("%d\n", id);
                 int num = dfs(i, j, id);
                 rm.push_back(num);
-                // printf("start at %d %d, size %d\n", i, j, num);
             }
         }
     }
@@ -62,10 +52,7 @@ int main()
             flr -= e;
             counter++;
         } 
-        else{
-            break;
-        }
-
+        else break;
     }
     if(counter==1) printf("%d room, %d square metre(s) left over\n", counter, flr);
     else printf("%d rooms, %d square metre(s) left over\n", counter, flr);
