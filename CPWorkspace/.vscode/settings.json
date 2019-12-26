@@ -10,6 +10,7 @@
         "algorithm": "cpp",
         "utility": "cpp",
         "map": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "xstring": "cpp"
     }
 }
