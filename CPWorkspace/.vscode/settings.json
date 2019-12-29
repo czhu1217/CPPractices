@@ -11,6 +11,7 @@
         "utility": "cpp",
         "map": "cpp",
         "string": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "cstdlib": "cpp"
     }
 }
