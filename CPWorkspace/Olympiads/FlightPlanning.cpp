@@ -1,11 +1,14 @@
 #include <stdio.h>
 using namespace std;
-#define f first;
-#define s second;
 
-
+struct flight{  int u, v, d;} f[20005];
 int n, m, k, q;
+
 int main(){
     scanf("%d %d %d %d", &n, &m, &k, &q);
+    for(int i=0;i<n;i++){
+        scanf("%d %d %d", &f[i].u, &f[i].v, &f[i].d);
+    }
+
 
 }
