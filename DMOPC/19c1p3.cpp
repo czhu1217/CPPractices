@@ -1,46 +1,47 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
-#define f first
-#define s second
-typedef pair<int, int> pi;
-const int MM = 3e5+5, mod = 1e9+7;
-int N, M, K, lo, hi; vector<pi> adj[MM]; pi val[MM]; long long ans = 1; bool vis[MM], vis2[MM];
-void dfs(int u){
-    vis[u] = 1;
-    for(pi e: adj[u]){
-        int v = e.f, w = e.s;
-        if(!vis[v]){val[v] = {-val[u].f, w-val[u].s}; dfs(v); }
+#define scan(x) do{while((x=getchar())<'0'); for(x-='0'; '0'<=(_=getchar()); x=(x<<3)+(x<<1)+_-'0');}while(0)
+char _;
+typedef long long ll;
+typedef pair<int,int> pii;
+const int MN = 3e5+2, MM = 3e3+2, MOD = 1e9+7, BASE = 131;
+vector<pii> adj[MN];
+bool neg[MN], vis[MN];
+int val[MN], l, r, k;
+void check (int a, int b, int c) {
+    if (neg[a] == neg[b]) {
+        int sol = (val[a] + val[b] - c)/2;
+        if (!neg[a]) sol = -sol;
+        l = max(l,sol); r = min(r,sol);
+    } else {
+        if (val[a]+val[b] != c) r = 0, l = k+1;
     }
 }
-void dfs2(int u){
-    vis2[u] = 1;
-    if(val[u].f > 0) { lo = max(lo, 1-val[u].s); hi = min(hi, K-val[u].s); }
-    else { lo = max(lo, val[u].s-K); hi = min(hi, val[u].s-1); }
-    for(pi e: adj[u]){
-        int v = e.f, w = e.s;  pi tmp = {-val[u].f, w - val[u].s};
-        if(val[v] == tmp) continue;
-        if(val[v].f == tmp.f || (val[v].s - tmp.s)%(tmp.f - val[v].f) != 0){
-            printf("0\n"); exit(0);
-        }
-        int sol = (val[v].s - tmp.s)/(tmp.f - val[v].f);
-        lo = max(lo, sol); hi = min(hi, sol);
+void dfs (int cur) {
+    vis[cur] = 1;
+    if (neg[cur]) l = max(l,val[cur]-k), r = min(r,val[cur]-1);
+    else  l = max(l,1-val[cur]), r = min(r,k-val[cur]);
+    for (pii p : adj[cur]) {
+        if (vis[p.first]) {check(cur,p.first,p.second); continue;}
+        neg[p.first] = !neg[cur];
+        val[p.first] = p.second - val[cur];
+        dfs(p.first);
     }
-    for(pi e: adj[u])
-        if(!vis2[e.f]) dfs2(e.f);
 }
-int main(){
-    scanf("%d %d %d", &N, &M, &K);
-    for(int i=1, u, v, w; i<=M; i++){
-        scanf("%d %d %d", &u, &v, &w);
-        adj[u].push_back({v, w}); adj[v].push_back({u, w});
+int main () {
+    int n,m,a,b,c; ll ans = 1;
+    scan(n); scan(m); scan(k);
+    while (m--) {
+        scan(a); scan(b); scan(c);
+        adj[a].emplace_back(b,c);
+        adj[b].emplace_back(a,c);
     }
-    for(int i=1; i<=N; i++){
-        if(!vis[i]){
-            val[i]={1, 0}; dfs(i);
-            lo = 1, hi = K;  dfs2(i);
-            if(lo > hi) { printf("0\n"); exit(0); }
-            ans = (ans * (hi - lo + 1)) % mod;
-        }
+    for (int i = 1; i <= n; i++) if (!vis[i]){
+        l = 1, r = k;
+        dfs(i);
+        if (r < l) return !printf ("0\n");
+        else ans = ans * (r-l+1) % MOD;
     }
-    printf("%lld\n", ans);
+    printf ("%lld\n",ans);
+    return 0;
 }
