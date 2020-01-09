@@ -1,30 +1,48 @@
-//to do
 #include <stdio.h>
 #include <iostream>
 #include <vector>
 #include <queue>
 #include <map>
+#include <cstring>
 using namespace std;
-int n, m, s, si, cnt, lv[100005], step = 0, vis[100005], onpath[100005], degree[100005], deleted[100005];
+int n, m, s, si, cnt, vis[100005], degree[100005], deleted[100005], cur;
+int mx=0;
+long long ans=0;
 vector<vector<int>> adj(1);
 map<int, bool> pho;
 queue<int> q;
 void prunning(){
-    int t;
     while(!q.empty()){
-        t = q.front();
+        int t = q.front();
         deleted[t] = true;
-
         q.pop();
-        vis[t] = true;
-        for(auto e:adj[t]){
-            if(!pho[e]&&degree[e]==1){
+        for(auto e:adj[t]){ 
+            if((!pho[e])&&(degree[e]==1)&&(!vis[e])){
                 q.push(e);
-            }
-            for(auto a:adj[e]){
+                vis[e] = true;
+                for(auto a:adj[e]){
                 degree[a]--;
+                
             }
+            degree[e]--;
+            }
+            
 
+        }
+
+    }
+}
+void dfs(int x, int cnt){
+
+    if(cnt>mx){
+        mx = cnt;
+        cur = x;
+
+    }
+    vis[x] = true;
+    for(auto e:adj[x]){
+        if(!vis[e]&&!deleted[e]){
+            dfs(e, cnt+1);
         }
 
     }
@@ -37,8 +55,9 @@ int main()
     cnt = m;
     for (int i = 0, p; i < m; i++)
     {
-        scanf("%d ", &p);
+        scanf("%d", &p);
         pho[p] = true;
+        cur = p;
     }
     for (int i = 0, a, b; i < n - 1; i++)
     {
@@ -48,18 +67,32 @@ int main()
         degree[b]++;
         adj[b].push_back(a);
     }
+
     for (int i = 0; i < n; i++)
     {
-        if (!pho[i] && degree[i] == 1)
+        if ((!pho[i]) && degree[i] == 1)
         {
             q.push(i);
+        
             for(auto e:adj[i]){
                 degree[e]--;
             }
+            degree[i]--;
+            vis[i] = true;
         }
     }
     prunning();
+    for (int i = 0; i < 2; i++)
+    {
+        memset(vis, false, sizeof(vis));
+        dfs(cur, 0);
+    }
+    for(int i=0;i<n;i++){
+        if(degree[i]&&(!deleted[i]))ans += degree[i];
+    }
+    ans -= mx;
 
-    printf("%d\n", step);
+
+    printf("%lld\n", ans);
     return 0;
 }
