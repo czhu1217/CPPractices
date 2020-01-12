@@ -1,15 +1,27 @@
-//roller coaster
-#include <stdio.h>
-int N, mx, mi,  cnt;
+#include <iostream>
+#include <string>
+using namespace std;
+string a[200];
+int sze;
 int main(){
-    scanf("%d %d %d", &N, &mi, &mx) ;
-    cnt = N;
-    for(int i=0;i<N;i++){
-        int t;
-        scanf("%d", &t);
-        if(t<mi||t>mx) cnt--;
+    string s;
+    for(int i=0;i<200;i++){
+        getline(cin, s);
+     
+        
+        if(s=="!"){
+            sze = i;
+            break;
+
+        } 
+        a[i] = s;
+        // cout << a[i] << endl;
 
     }
-    printf("%d\n", cnt);
+    for(int i=0;i<sze;i++){
+        printf("{\"text\" : \"");
+        cout << a[i] << "\", \"icon\": \"RUN\"}," << "\n";
+    }
     return 0;
+    
 }
