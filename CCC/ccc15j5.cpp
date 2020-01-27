@@ -22,16 +22,8 @@ int main(){
     printf("\n");
     for(int i=2;i<=m;i++){
         for(int j=1;j<=n;j++){
-            if(dp[i-1][j]>0){
-                // printf("%d %d\n", i, j);
-                for(int k=1;k<=n;k++){
-                    if(j+k*(m-i+1)<=n){
-                        // printf("%d %d %d %d\n",i, j+k*(m-i+1), dp[i][j+k*(m-i+1)],dp[i-1][j]+1);
-                        dp[i][j+k*(m-i+1)] = max(dp[i][j+k*(m-i+1)], dp[i-1][j]+1);
-                        printf("%d %d %d\n", i, j+k*(m-i+1), dp[i][j+k*(m-i+1)]);
-                    }
-                    else break;
-                }
+            if(j-0){
+                
             }
 
             
