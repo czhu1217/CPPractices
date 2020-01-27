@@ -10,7 +10,6 @@ bool flag;
 vector<int> river, branch;
 int main()
 {
-
     cin >> T;
     river.push_back(0);
     for (int i = 0; i < T; i++)
@@ -30,7 +29,6 @@ int main()
             if (river.back() == x - 1 || (river.empty() && x == 1))
             {
                 river.push_back(x);
-                // cout << "push in river" << x << endl;
                 while (true)
                 {
                     if (branch.back() == river.back() + 1)
@@ -38,7 +36,6 @@ int main()
                         int t = branch.back();
                         branch.pop_back();
                         river.push_back(t);
-                        // cout << "push in river" << x << endl;
                     }
                     else
                         break;
@@ -46,11 +43,7 @@ int main()
             }
             else
             {
-                if (branch.empty() || x < branch.back())
-                {
-                    branch.push_back(x);
-                    // cout << "push in branch" << x << endl;
-                }
+                if (branch.empty() || x < branch.back()) branch.push_back(x);
                 else
                 {
                     cout << "N\n";
@@ -59,7 +52,7 @@ int main()
                 }
             }
         }
-        if ((!flag) && branch.empty())
+        if (!flag)
             cout << "Y\n";
     }
     return 0;
