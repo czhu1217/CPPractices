@@ -17,14 +17,12 @@ int main(){
         while(left > 0){
           if((spd+1+x)*(spd+1-x+1)/2<=left){
               spd++;
-              left -= spd;
           } 
           else if((spd+x)*(spd-x+1)/2<=left) {
-              left -= spd;
           }else{
               spd--;
-              left -= spd;
           }
+          left -= spd;
           cnt++;
         }
         cout << cnt << endl;
