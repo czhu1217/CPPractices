@@ -6,92 +6,32 @@
 #include <math.h>
 #include <map>
 using namespace std;
-int N, Q, cnt=0, r[100005], vis[100005], connect[100005];
-vector<vector<int>> adj;
-
-bool flag, pre = false;
-void dfs(int a){
-    vis[a] = true;
-    for(auto e:adj[a]){ 
-        if(!vis[e]){
-            dfs(e);
-        }
+typedef long long ll;
+ll N, K, M, x, ans, lo, hi;
+ll check(ll mid){
+    ll tot = 0, days = 0;
+    while(days<K && tot<N){
+        ll y = (N-tot)/mid;
+        if(y<=M) return tot + (K-days)*M;
+        ll temp = min(K-days, (N-mid*y-tot) / y + 1);
+        tot += temp*y;
+        days += temp;
     }
-
-}
-
-bool connected(int a)
-{
-    // cout << "at " << a << endl;
-    vis[a] = true;
-    if (connect[a])
-        return true;
-
-    for (auto e : adj[a])
-    {
-        if (!vis[e] && connected(e))
-        {
-            connect[a] = true;
-        }
-    }
-    if (connect[a])
-        return true;
-    return false;
+    return tot;
 }
 int main(){
-    cin >> N >> Q;
-    adj.resize(N+2);
-    memset(r, 0, sizeof(r));
-    for(int i=1, a,b, x;i<=Q;i++){
-        flag = false;
-        cin >> a >> b >> x;
-        if(i==1){
-            connect[a] = true;
-            connect[b] = true;
+    cin >> N >> K >> M;
+    lo = 1, hi = N;
+    while(lo<=hi){
+        ll mid = (lo+hi)/2;
+        if(check(mid)>=N){
+            ans = mid;
+            lo = mid+1;
         }
-        if(r[a]%2&&x%2) cnt--;
-        else if(r[a]%2==0&&x%2) cnt++;
-        r[a] += x;
-        if(r[b]%2&&x%2) cnt--;
-        else if(r[b]%2==0&&x%2) cnt++;
-        r[b] += x;
-        adj[a].push_back(b);
-        adj[b].push_back(a);
-     
-     
-        memset(vis, false, sizeof(vis));
-        if(pre&&(connect[a]||connect[b])&&(cnt==0||cnt==2)){
-            cout << "YES\n";
-            connect[a] = true;
-            connect[b] = true;
-            pre = true;
-            continue;
-        }
-        dfs(a);
-        for(int i=1;i<=N;i++){
-            if(!adj[i].empty()&&!vis[i]){
-                cout << "NO" << "\n";
-                pre = false;
-                flag = true;
-                break;
-            }
-        }
-        if(flag){
-            continue;
-        }
-        if (cnt == 2 || cnt == 0)
-        {
-            cout << "YES\n";
-            pre = true;
-        }
-        else
-        {
-            cout << "NO\n";
-            pre = false;
-        }
-
-    
-
+        else hi = mid-1;
     }
+    cout << ans << "\n";
     return 0;
+
+
 }
