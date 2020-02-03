@@ -6,3 +6,6 @@
 #include <math.h>
 #include <map>
 using namespace std;
+int main(){
+    
+}
