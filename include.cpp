@@ -7,4 +7,5 @@
 #include <map>
 #include <set>
 #include <unordered_set>
+typedef long long ll;
 using namespace std;
