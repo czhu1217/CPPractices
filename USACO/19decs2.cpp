@@ -22,7 +22,6 @@ struct cow{
     }
 
 } a[50002];
-// vector<cow> a[50002];
 int main(){
     cin >> N >> L;
     for(ll i=0;i<N;i++){
@@ -52,7 +51,6 @@ int main(){
         if(wcnt*2>=cnt) break;
 
     }
-
     queue<ll> q;
     for(ll i = 0; i <N;i++){
         if(a[i].d==-1){
