@@ -1,8 +1,19 @@
 {
     "configurations": [
-    
-  
-    
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - test",
+            "request": "launch",
+            "mainClass": "CCC.test",
+            "projectName": "CPPractices_5022cb07"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - test",
+            "request": "launch",
+            "mainClass": "test",
+            "projectName": "CPPractices_5022cb07"
+        },
         {
             "name": "(gdb) Launch",
             "type": "cppdbg",
