@@ -16,5 +16,6 @@
         "cmath": "cpp",
         "iomanip": "cpp",
         "iosfwd": "cpp"
-    }
+    },
+    "competitive-programming-helper.firstTime": false
 }

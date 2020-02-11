@@ -1,2 +1,0 @@
-//todo
-//divide and conquer
