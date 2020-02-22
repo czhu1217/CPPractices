@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <algorithm>
 #include <string>
@@ -7,7 +6,7 @@
 using namespace std;
 int N;
 vector<string> suf;
-int lcp(string s, string t)
+int lcpp(string s, string t)
 {
     int n = min(s.size(), t.size());
     for (int i = 0; i < n; i++)
@@ -31,7 +30,7 @@ int main()
         sort(suf.begin(), suf.end());
         int cnt = suf.front().size();
         for(int i=1;i<suf.size();i++){
-            int dup = lcp(suf.at(i), suf.at(i-1));
+            int lcp = lcpp(suf.at(i), suf.at(i-1));
             cnt += suf.at(i).size() - lcp;
         }
         cout << cnt+1 << "\n";

@@ -14,7 +14,7 @@ int main(){
     cin >> N;
     for(int i=1;i<=N;i++){
         for(int j=1, x;j<=N;j++){
-            cin >> x;
+            scanf("%d", &x);
             if(i==1){
                 if(x){
                     c[j] = true;

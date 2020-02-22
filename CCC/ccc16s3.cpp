@@ -28,10 +28,7 @@ void prunning(){
             }
             degree[e]--;
             }
-            
-
         }
-
     }
 }
 void dfs(int x, int cnt){
