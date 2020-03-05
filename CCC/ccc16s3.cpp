@@ -90,8 +90,6 @@ int main()
         if(degree[i]&&(!deleted[i]))ans += degree[i];
     }
     ans -= mx;
-
-
     printf("%lld\n", ans);
     return 0;
 }

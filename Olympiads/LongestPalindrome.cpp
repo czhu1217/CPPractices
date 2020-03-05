@@ -8,10 +8,8 @@ string st;
 
 int main()
 {
-   
-for(int i=0;i<5;i++){
-    getline(cin, st);
-    n = st.length();
+    cin >> n;
+    cin >> st;
     for (int j = 0; j < n; j++)
     {
         ar[j][j] = 1;
@@ -36,7 +34,6 @@ for(int i=0;i<5;i++){
         }
     }
     cout << ar[0][n - 1] << "\n";
-}
     
     return 0;
 }

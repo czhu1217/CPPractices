@@ -15,7 +15,8 @@
         "cstdlib": "cpp",
         "cmath": "cpp",
         "iomanip": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "xiosbase": "cpp"
     },
     "competitive-programming-helper.firstTime": false
 }
