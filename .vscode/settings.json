@@ -16,7 +16,8 @@
         "cmath": "cpp",
         "iomanip": "cpp",
         "iosfwd": "cpp",
-        "xiosbase": "cpp"
+        "xiosbase": "cpp",
+        "unordered_map": "cpp"
     },
     "competitive-programming-helper.firstTime": false
 }
