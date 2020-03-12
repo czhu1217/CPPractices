@@ -11,48 +11,58 @@ using namespace std;
 typedef long long ll;
 int N, M, K;
 int l[102], r[102];
-int cow[100005], pos[100005], cycle[100005];
-vector<int> v[100005];
-int main(){
+int cow[100005];
+bool vis[100005];
+int main()
+{
     //  ifstream cin("swap.in");
     //  ofstream cout("swap.out");
-    
+
     cin >> N >> M >> K;
-    for(int i=1;i<=N;i++){
+    for (int i = 1; i <= N; i++)
+    {
         cow[i] = i;
     }
-    for(int i=0;i<M;i++){
+    for (int i = 1; i <= M; i++)
+    {
         cin >> l[i] >> r[i];
     }
-
-    for(int i=1;i<=M;i++){
-        int le = l[i], ri = r[i];
-        for(int k=0;k<=(int)(ri-le)/2;k++){
-            int t = cow[le+k];
-            cow[le+k] = cow[ri-k];
-            cow[ri-k] = t;
+    for (int j = 1; j <= M; j++)
+    {
+        int le = l[j], ri = r[j];
+        for (int k = 0; k <= (int)(ri - le) / 2; k++)
+        {
+            int temp = cow[le + k];
+            cow[le + k] = cow[ri - k];
+            cow[ri - k] = temp;
         }
     }
-    for(int i=1;i<=N;i++){
-        pos[cow[i]] = i;
-    }
-    for(int i=1; i<=N;i++){
-        int temp = pos[i];
-            v[i].push_back(temp);
-        while(temp!=i){
-            temp = pos[temp];
-            v[i].push_back(temp);
 
+    for (int i = 1; i <= N; i++)
+    {
+
+        if (!vis[i])
+        {
+            vis[i] = true;
+            int temp = cow[i];
+            vector<int> v;
+            v.push_back(i);
+            while (temp != i)
+            {
+                vis[temp] = true;
+                v.push_back(temp);
+                temp = cow[temp];
+            }
+            int rem = K % v.size();
+            for (int j = 0; j < v.size(); j++)
+            {
+                cow[v[j]] = v[(j + rem) % v.size()];
+            }
         }
     }
-    for(int i=1;i<=N;i++){
-        cout << v[i][(K-1)%v[i].size()] << "\n";
+    for (int i = 1; i <= N; i++)
+    {
+        cout << cow[i] << endl;
     }
-
-
-    
-
-
-
     return 0;
 }
