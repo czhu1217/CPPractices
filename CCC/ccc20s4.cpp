@@ -5,35 +5,38 @@
 #include <vector>
 #include <math.h>
 #include <map>
+#include <unordered_set>
+#include <set>
 using namespace std;
 typedef long long ll;
-ll N;
+const int MM = 1e6+2;
+int n, a[MM], b[MM], c[MM];
 string s;
-ll mi = 0, cnt, pre, bcnt;
+void update(int x[], int y[], int i){
+    int nx = x[n], ny = y[n];
+    
+    }
 int main(){
-    cin >> s;
-    string temp;
-    for(int i=0;i<s.size();i++){
-        if(s[i]=='B'){
-            temp += s[i];
+    cin >> s; n = s.size();
+    for(int i=1;i<=n;i++){
+        a[i] = a[i-1]; b[i] = b[i-1]; c[i] = c[i-1];
+        if(s[i-1]=='A') a[i]++;
+        else if (a[i-1]=='B')b[i]++;
+        else a[i]++;
+
+    }
+    int na = a[n], nb = b[n], nc = c[n];
+    for(int i=1;i<=n;i++){
+        if(i>=na+nb){
+            update(a, b, i);
+            update(b, a, i);
         }
-        else{
-            s = s.substr(i);
-            break;
+        if(i>=na+nc){
+            update(a, c, i); update(c, a, i);
+        }
+        if(i>=nb+nc){
+            update(b, c, i); update(c, b, i);
         }
     }
-    // cout << s << endl;
-    s = s + temp;
-    // cout << s << endl;
-    for(int i=0;i<s.size();i++){
-        if(s[i]=='B'){
-            cnt ++;
-            bcnt++;
-        }
-        else cnt = 0;
-        if(cnt>mi) mi = cnt;
-    }
-    cout << bcnt - mi << endl;
-    return 0;
 
 }
