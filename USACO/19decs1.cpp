@@ -28,6 +28,10 @@ int main(){
         }
     }
     for(int i=N;i>0;i--){
+        if(cnt>1){
+            cout << -1 << endl;
+            return 0;
+        }
         bool flg = false;
         bool tog = false;
         for(int j=N, x;j>0;j--){

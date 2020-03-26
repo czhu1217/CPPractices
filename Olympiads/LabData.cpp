@@ -1,54 +1,66 @@
+#include <iostream>
 #include <stdio.h>
-#include <vector>
-#include <tuple>
+#include <cstring>
 #include <algorithm>
+#include <vector>
+#include <math.h>
+#include <map>
+#include <queue>
+#include <fstream>
 using namespace std;
-int n, bit[200000], a[200000];
-void update(int idx, int val)
-{
-    for (int i = idx; i <= n; i += i & -i)
-    {
-        bit[i] += val;
+typedef  long long ll;
+ll pre[200005], bit[200005]; ll ans[200002];
+struct tup{ 
+    ll i, l, r, v;
+    bool operator<(tup &e){
+        return v<e.v;
     }
+} qu[200005];
+ll N, Q;
+pair<ll, int> a[200002];
+ll query(int pos){
+    ll sum=0;
+    for(int i=pos;i>0;i-=i&-i){
+        sum+=bit[i];
+    }
+    return sum;
 }
 
-int query(int idx)
-{
-    int sum = 0;
-    for (int i = idx; i > 0; i -= i & -i)
-    {
-        sum += bit[i];
+void update(int pos, ll v){
+    for(int i=pos; i<=N;i+=i&-i){
+        bit[i]+=v ;
     }
 }
-
-long long rangeQuery(int l, int r)
-{
-    return query(r) - query(l - 1);
-}
-
-int main()
-{
-    int q;
-    scanf("%d %d", &q, &n);
-    for (int i = 0; i < n; i++)
-    {
-        scanf("%d", a[i]);
+int main(){
+    cin >> N >> Q;
+    for(int i=1, x;i<=N;i++){
+        cin >> x;
+        a[i] = {x, i};
     }
-    vector<tuple<int, int, int>> op;
-    for (int i = 0; i < q; i++)
-    { //loops Q times
-        int l, r, k;
-        scanf("%d %d %d", l, r, k);
-        op.push_back(make_tuple(l, r, k));
+    for(int i=1;i<=Q;i++){
+        cin >> qu[i].l >> qu[i].r >> qu[i].v;
+        qu[i].i = i;
     }
+    pre[0] = 0;
+    for(int i=1;i<=N;i++){
+        pre[i] = a[i].first + pre[i-1];
+    }
+   
+    sort(qu+1, qu+Q+1);
+    sort(a+1, a+N+1);
+    int j=1;
+
+    for(int i=1;i<=Q;i++){
+        while(a[j].first<qu[i].v&&j<=N){
+            update(a[j].second, a[j].first);
+            j++;
+        }
+        ans[qu[i].i] =  pre[qu[i].r] - pre[qu[i].l-1] - 2*(query(qu[i].r) - query(qu[i].l-1));
+    }
+    for(int i=1;i<=Q;i++){
+        cout << ans[i] << "\n";
+    }
+    return 0;
+
     
-    sort(op.begin(), op.end());
-    for(int i=0;i<q;i++){
-        a[n+1] = get<0>(op[i]);    
-    }
-    sort(a[0], a[q+n-1]);
-    for (int i = 0; i < q; i++)
-    {
-        long long sum = rangeQuery(get<1>(op[i]), get<2>(op[i]));
-    }
 }
