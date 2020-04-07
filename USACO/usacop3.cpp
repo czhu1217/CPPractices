@@ -13,43 +13,26 @@
 #include <fstream>
 using namespace std;
 typedef long long ll;
-int N;
 const int MM = 1e5+2;
-int x[100005], y[100005];
-vector<int> adj[100005];
-bool vis[MM];
-queue<int> qu;
-int ans = 0;
-int dfs(int idx, int cnt){
-    if(cnt>ans) ans = cnt;
-    vis[idx] = true;
-    int t = 0;
-    for(auto e:adj[idx]){
-        if(!vis[e]){
-            dfs(e, cnt+1);
-        }
+int N, ans = 1, lol[100005], hir[100005];
+struct pi{
+    int f, s;
+    bool operator<(const pi &e){
+        return e.f==f?s<e.s:f<e.f;
     }
-}
+} co[MM];
 int main(){
-    ifstream cin("moop.in");
-     ofstream cout("moop.out");
     cin >> N;
-    for(int i=1;i<=N;i++){
-        cin >> x[i] >> y[i];
+    for(int i=1, x, y;i<=N;i++){
+        scanf("%d %d", &x, &y);
+        co[i] = {x, y};
     }
-    for(int i=1;i<=N;i++){
-        for(int j=1;j<=N;j++){
-            if((x[i]<=x[j]&&y[i]<=y[j])||(x[i]>=x[j]&&y[i]>=y[j])){
-                adj[i].push_back(j);
-                adj[j].push_back(i);
-            }
-        }
-    }
-    for(int i=1;i<=N;i++){
-        memset(vis, false, sizeof(vis));
-        dfs(i, 0);
-    }
-    cout << N-ans << "\n";
+    sort(co+1, co+N+1);
+    lol[1]=co[1].s;
+    for(int i=2;i<=N;i++) lol[i] = min(co[i].s, lol[i-1]);
+    hir[N]=co[N].s;
+    for(int i=N-1;i>0;i--) hir[i] = max(co[i].s, hir[i+1]);
+    for(int i=1;i<N;i++) if(lol[i]>hir[i+1]) ans++;
+    cout << ans << "\n";
     return 0;
-
 }

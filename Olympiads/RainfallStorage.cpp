@@ -13,30 +13,28 @@
 #include <climits>
 using namespace std;
 typedef long long ll;
-int N, a[1000005];
+int N, a[1000005], mx=0;
 ll tot=0;
 int main(){
     cin >> N;
-    int lastOpen; bool open = false;
     for(int i=1;i<=N;i++){
         scanf("%d", &a[i]);
-    }
-    int h=a[1];
-    for(int i=1;i<=N;i++){
-        int cur=0;
-        for(int j=i+1;j<=N;j++){
-            if(a[j]>=a[i]){
-                tot+=cur;
-                i=j-1;
-                break;
+        if(a[i]<=mx){
+            for(int j=i-1;j>0;j--){
+                if(a[j]>=a[i]) break;
+                tot += a[i]-a[j];
+                a[j]=a[i];
             }
-            else{
-                cur += a[i]-a[j];
+        }
+        else{
+            for(int j=i-1;j>0;j--){
+                if(a[j]>=mx) break;
+                tot += mx-a[j];
+                a[j]=mx;
             }
+            mx = a[i];
         }
     }
     cout << tot << "\n";
     return 0;
-
-
 }

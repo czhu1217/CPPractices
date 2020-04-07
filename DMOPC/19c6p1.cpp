@@ -12,57 +12,22 @@
 #include <unordered_map>
 typedef long long ll;
 using namespace std;
-int aa1, bb1, aa2, aa3, aa4, bb2, bb3, bb4; long double m1, m2, b1, b2;
-bool und1=false, und2=false;
-double mul = 1e5;
+int x1, y11, x2, y2, x3, y3, x4, y4;
+pair<int, int> sa, sb;
+int b1, b2;
 int main(){
-    cin >> aa1 >> bb1 >> aa2 >> bb2 >> aa3 >> bb3 >> aa4 >> bb4;
-    if(aa2!=aa1){
-        m1 = (bb2-bb1)/((aa2-aa1)*1.0);
-    }
-    else und1 = true;
-    if(aa3!=aa4)
-    m2 = (bb4-bb3)/((aa4-aa3)*1.0);
-    else und2 = true;
-    if(!und1){
-        b1 = bb1 - aa1*m1;
-    }
-    else b1 = aa1;
-    if(!und2){
-        b2 = bb3 - aa3*m2;
-    }
-    else b2 = aa3;
-    if(und1&&und2){
-        if(aa1==aa3){
-            cout << "coincident" << "\n";
-        }
-        else{
-            cout << "parallel" << "\n";
-        }
-    }
-    else if(und1&&(!und2)){
-        double a = aa1;
-        double b = aa1*1.0*m2+b2;
-        printf("%.7f %.7f", a, b);
-    }
-    else if((!und1)&&und2){
-        double a = aa3;
-        double b = aa3*1.0*m1 + b1;
-        printf("%.7f %.7f", a, b);
+    scanf("%d %d %d %d", &x1, &y11, &x2, &y2);
+    scanf("%d %d %d %d", &x3, &y3, &x4, &y4);
+    int a1 = y11-y2, b1=x2-x1, c1=-1*(a1*x1+b1*y11);
+    int a2 = y3-y4, b2=x4-x3, c2=-1*(a2*x3+b2*y3);
+    if(a1*b2==a2*b1){
+        if(b1*c2==b2*c1)
+            printf("coincident\n");
+        else printf("parallel\n");
     }
     else{
-        if(m1==m2){
-            if(b1==b2) cout << "coincident" << endl;
-            else cout << "parallel" << endl;
-        }
-        else{
-        double a, b;
-        a = (b2-b1)/(m1-m2);
-        b = a*m1+b1;
-        printf("%.7f %.7f", a, b);
-        }
+        double x =  (double)(b1*c2-b2*c1)/(b2*a1-b1*a2)*1.0, y = (double)(a1*c2-a2*c1)/(a2*b1-a1*b2)*1.0;
+        printf("%.8f %.8f\n", x,y );
     }
     return 0;
-
-
 }
