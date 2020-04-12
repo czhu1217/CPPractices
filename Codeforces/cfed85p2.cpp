@@ -12,7 +12,7 @@
 #include <unordered_map>
 using namespace std;
 typedef long long ll;
-int a[100005]; ll pre[100005];
+ll a[100005]; ll pre[100005];
 int main(){
     int T;
     scanf("%d", &T);
@@ -22,23 +22,20 @@ int main(){
         memset(a, 0, sizeof a);
         memset(pre, 0, sizeof pre);
         for(int i=1;i<=n;i++){
-            scanf("%d", &a[i]);
-            sum += a[i];
+            scanf("%lld", &a[i]);
         }
-        int mx = sum/x;
         sort(a+1, a+n+1);
         reverse(a+1, a+n+1);
         pre[0]=0;
         for(int i=1;i<=n;i++){
             pre[i] = a[i]+pre[i-1];
         }
-        int i=mx;
-        for(i=min(mx, n);i>0;i--){
-            if(pre[i]/i>=x){
-                break;
-            }
+        int ans=0;
+        for(int i=1;i<=n;i++){
+            sum += a[i];
+            if(sum>=(ll)x*i) ans=i;
         }
-        printf("%d\n", i);
+        printf("%d\n", ans);
     }
     return 0;
 
