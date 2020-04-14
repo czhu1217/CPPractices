@@ -1,20 +1,21 @@
 
 //Graveyard NEERC2006
-#include <iostream>
+//legit solution
 #include <stdio.h>
-#include <cstring>
 #include <algorithm>
-#include <vector>
-#include <math.h>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <bitset>
-#include <queue>
-#include <unordered_map>
-#include <climits>
 using namespace std;
 typedef long long ll;
 int main(){
+    int n, m;
+    while(scanf("%d %d", &n, &m)==2){
+        double ans = 0.0;
+        for(int i=1;i<n;i++){
+            double pos = (double)i/n*(n+m);
+            ans += fabs(pos-floor(pos+0.5))/(n+m);
+        }
+        ans *= 10000;
+        printf("%.4lf\n", ans);
+    }
+    return 0;
 
 }
