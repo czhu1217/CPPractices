@@ -35,10 +35,11 @@ int main()
             if(s[i]=='W')h -= mul;
             if(s[i]=='E')h+=mul;
             if(s[i]==')'){ if(!ve.empty()) mul /= ve.back();ve.pop_back();}
-
-        }
             v = (v+MM)%MM;
             h = (h+MM)%MM;
+
+        }
+
 
         
         printf("%lld %lld\n", 1+h, 1+v);
