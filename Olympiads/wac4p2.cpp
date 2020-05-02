@@ -34,11 +34,7 @@ int main(){
             dp[j] = min(dp[j], dp[j-a[i].second]+t);
             if(j>=tot){ans = min(ans, dp[j]);}
         }
-        for(ll j=0;j<=20;j++){
-            if(dp[j]==4557430888798830399 )cout << 0 << " ";
-            else cout << dp[j] << " ";
-        }
-        cout << "\n";
+
     }
     cout << ans << "\n";
     return 0;
