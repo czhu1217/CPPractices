@@ -26,7 +26,7 @@ int main(){
     sign[0]=1;num[0]=0;
     for(int i=1;i<N;i++){
         sign[i] = -1*sign[i-1];
-        num[i] = a[i]-num[i-1];if(sign[i]==-1)mx = min(mx, num[i]);
+        num[i] = a[i]-num[i-1];if(sign[i]==-1)mx = min(mx, num[i]);else mx = min(mx, min(a[i]-num[i], a[(i+1)%N]-num[i]));
 
     }
     if(N%2){
