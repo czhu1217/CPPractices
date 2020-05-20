@@ -1,6 +1,6 @@
 //grid 2
 //mod division
-//number mod inverison
+//number mod inversion
 //n choose k
 #include <bits/stdc++.h>
 using namespace std;

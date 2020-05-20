@@ -14,8 +14,8 @@
 using namespace std;
 typedef long long ll;
 int main(){
-    for(int i=1;i<=10000;i++){
-        cout << -1 << " " << "asdfghjklp" << "\n";
+    for(int i=1;i<=50;i++){
+        ll a, b, c;
+        
     }
-    return 0;
 }
