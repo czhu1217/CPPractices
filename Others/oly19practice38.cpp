@@ -17,7 +17,7 @@ typedef long long ll;
 typedef pair<ll, ll> pi;
 long double B[55];
 const ll MM = 3e5+5, MM2 = 20, mod = 998244353; ll cnt=1;
-ll n, q, lv[MM],st[MM2][2*MM+1], idx[MM], inv[MM];
+ll n, q, lv[MM],st[MM2][2*MM+1], idx[MM], inv[MM], memo[MM][55];
 vector<ll> adj[MM];
 ll min_dis(ll a, ll b){
     return lv[a]<lv[b]?a:b;
@@ -63,7 +63,6 @@ void build(){
     }
 }
 int main(){
-    memset(idx, 0, sizeof 0);
     cin >> n;
     for(ll i=1, u, v;i<n;i++){
         scanf("%lld%lld", &u, &v);
@@ -71,6 +70,8 @@ int main(){
     }
     dfs(1, -1, 0);
     build();
+
+
     scanf("%lld", &q);
     ll u, v, k;
     while(q--){
@@ -78,13 +79,17 @@ int main(){
         scanf("%lld%lld%lld", &u, &v, &k);
         ll lca = query(u, v);
         for(ll i=lv[u];i>lv[lca];i--){
-            sum = (sum + quick_pow(i, k))%mod;
+            ll po;
+            if(!memo[i][k]) memo[i][k] = quick_pow(i, k);
+            sum = (sum + memo[i][k])%mod;
         }
 
         for(ll i=lv[v];i>lv[lca];i--){
-            sum = (sum+quick_pow(i, k))%mod;
+            if(!memo[i][k]) memo[i][k] = quick_pow(i, k);
+            sum = (sum+memo[i][k])%mod;
         }
-        sum = (sum+ quick_pow(lv[lca], k))%mod;
+        if(!memo[lv[lca]][k]) memo[lv[lca]][k] = quick_pow(lv[lca], k);
+        sum = (sum+memo[lv[lca]][k])%mod;
         cout << sum << "\n";
 
     }
