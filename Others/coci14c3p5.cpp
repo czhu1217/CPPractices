@@ -35,8 +35,8 @@ int lca(int u, int v){
     }
     return st[0][u];
 }
-int main(){
-    // cin.tie(0); cin.sync_with_stdio(0);
+int main(){cin.sync_with_stdio(0);
+    cin.tie(0); 
     cin >> n;
     st[0][0]=-1; dis[0]=0;val[0]=0;
     for(int i=1;i<=n;i++){
@@ -48,7 +48,6 @@ int main(){
             st[0][i]=v;
             for(int j=1;j<MM2;j++){
                 if(st[j-1][i]!=-1) st[j][i] = st[j-1][st[j-1][i]];
-                else st[i][j] = st[i][j];
             }
 
         }
