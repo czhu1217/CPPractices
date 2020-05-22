@@ -1,4 +1,4 @@
-//3 partitiion
+//3 partition
 #include <stdio.h>
 #include <algorithm>
 #include <cstring>

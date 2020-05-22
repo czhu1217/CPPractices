@@ -1,3 +1,4 @@
+//my stupid solution with weird state and transition but magically passes
 #include <stdio.h>
 #include <cstring>
 #include <iostream>
