@@ -11,16 +11,14 @@
 #include <queue>
 #include <unordered_map>
 #include <string>
-#include <climits>
-#define f first
-#define s second
 using namespace std;
 typedef long long ll;
-void solve(){
-
-}
+typedef pair<int, int> pi;
+#define f first
+#define s second
+int n; pi a[2005];
 int main(){
-    int t; cin >> t;
-    while(t--)solve();
-    return 0;
+    cin >> n;
+    for(int i=1;i<=n;i++) cin >> a[i].f >> a[i].s;
+    
 }
