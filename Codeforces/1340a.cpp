@@ -38,12 +38,28 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 const int MOD = 1000000007;
 const char nl = '\n';
 const int MX = 100001; //check the limits, dummy
- 
+void solve(){
+        vi head; 
+        int n; cin >> n;
+        vi a(n+1);
+        FOR(i, 1, n){
+            cin >> a[i];
+        }
+        head.pb(a[1]);
+        FOR(i, 2, n){
+            if(a[i]!=a[i-1]+1){
+            if(!head.empty()&&a[i]>head.back()){cout << "NO\n"; return;}           
+             head.pb(a[i]);
+            }
+        }
+        cout << "YES" << nl;
+}
 int main() {
-	ios_base::sync_with_stdio(0); cin.tie(0);    
+	// ios_base::sync_with_stdio(0); cin.tie(0);    
 	
     int T; cin >> T;
     while(T--) {
+       solve();
     }
 	
 	return 0;

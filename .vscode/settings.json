@@ -56,7 +56,8 @@
         "xstddef": "cpp",
         "xtr1common": "cpp",
         "xtree": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "climits": "cpp"
     },
     "competitive-programming-helper.firstTime": false
 }

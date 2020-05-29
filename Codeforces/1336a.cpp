@@ -12,22 +12,7 @@
 #include <unordered_map>
 #include <string>
 #include <climits>
-#include <stdio.h>
-#include <cstring>
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <math.h>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <bitset>
-#include <queue>
-#include <unordered_map>
-#include <string>
-#include <climits>
-#define f first
-#define s second
+
 using namespace std; 
 typedef long long ll;
 typedef long double ld;
@@ -55,11 +40,41 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-void solve(){
 
+const int MM = 2e5+2;
+vector<int> adj[MM]; ll dep[MM], sz[MM];
+ll dfs(int u, int p, int d){
+    dep[u] = d;
+    ll size = 1;
+    for(auto e:adj[u]){
+        if(e!=p) size+=dfs(e, u, d+1);
+    }
+    sz[u] = size;
+    return size;
+}
+void solve(){
+    for(auto e:adj)e.clear();
+    int n, k; cin >> n >> k;
+    for(int i=1, u, v;i<n;i++){
+        cin >> u >> v;
+        adj[u].pb(v);adj[v].pb(u);
+    }
+
+    dfs(1, 0, 0);
+    int val[MM];
+    for(int i=1;i<=n;i++){
+        val[i] = sz[i] - dep[i] - 1;
+    }
+    sort(val+1, val+n+1);
+    reverse(val+1, val+n+1);
+    ll ans=0;
+    for(int i=1;i<=n-k;i++){
+        ans += val[i];
+    }
+
+    cout << ans << "\n";
 }
 int main(){
-    int t; cin >> t;
-    while(t--)solve();
+    solve();
     return 0;
 }
