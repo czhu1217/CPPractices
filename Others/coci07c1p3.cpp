@@ -42,11 +42,50 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
+int n, a[102], x, y;
 void solve(){
+    cin >> n;
+    for(int i=1;i<=n;i++){
+        cin >> a[i];
+    }
+    sort(a+1, a+1+n);
+    cin >> x >> y;
+    if(x%2==0) x++;
+    if(y%2==0)y--;
+    int ans=0, id; int it=1; int st=1, best=0;
+    if(x<a[1]){
+        id = x;
+        best = a[1]-x;
+    }
+    if(y>a[n]){
+        if(y-a[n]>best){
+            id = y;
+            best = y-a[n];
+        }
+    }
+
+
+    for(int i=2;i<=n;i++){
+
+        int temp, cur;
+
+        temp = (a[i]+a[i-1])/2;
+        if(temp%2==0)temp++;
+        cur = min(temp-a[i-1], a[i]-temp);
+        if(temp>=x&&temp<=y){
+            if(cur>best){ id = temp; best=cur;}
+        }
+                if(a[i]>y){
+            temp = y;
+            cur = min(temp-a[i-1], a[i]-temp);
+            if(cur>best){ id = temp; best=cur;}
+            break;
+        }
+    }
+    cout << id << '\n';
 
 }
 int main(){
-    int t; cin >> t;
-    while(t--)solve();
+    solve();
     return 0;
 }

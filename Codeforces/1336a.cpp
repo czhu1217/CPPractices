@@ -71,7 +71,6 @@ void solve(){
     for(int i=1;i<=n-k;i++){
         ans += val[i];
     }
-
     cout << ans << "\n";
 }
 int main(){
