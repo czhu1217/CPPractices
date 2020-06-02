@@ -63,19 +63,15 @@ void solve(){
             best = y-a[n];
         }
     }
-
-
     for(int i=2;i<=n;i++){
-
         int temp, cur;
-
         temp = (a[i]+a[i-1])/2;
         if(temp%2==0)temp++;
         cur = min(temp-a[i-1], a[i]-temp);
         if(temp>=x&&temp<=y){
             if(cur>best){ id = temp; best=cur;}
         }
-                if(a[i]>y){
+        if(a[i]>y){
             temp = y;
             cur = min(temp-a[i-1], a[i]-temp);
             if(cur>best){ id = temp; best=cur;}

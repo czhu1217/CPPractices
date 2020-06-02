@@ -1,21 +1,19 @@
 #include <stdio.h>
 #include <vector>
 #include <algorithm>
-#include <map>
 using namespace std;
-#define f first
-#define s second
-int n, m, par[100005], rnk[100005]; pair<int, int> qu[300005];
-int q;
-map<int, bool> imp;
+
+int n, m, par[100005], rnk[100005];
+int d, cnt;
+int days;
 struct ed
 {
-    int a, b, d, t;
+    int a, b, c, d;
     bool operator<(const ed &e) const
     {
-        return t < e.t || (t == e.t && d > e.d);
+        return c < e.c || (c == e.c && d < e.d);
     }
-};vector<ed> aa;
+};
 int find(int n)
 {
     if (par[n] != n)
@@ -43,51 +41,72 @@ bool merge(int a, int b)
 
     return true;
 }
-
+vector<ed> aa;
+bool ehc = false;
+int maxc;
 int main()
 {
-    scanf("%d %d %d", &n, &m, &q);
+    scanf("%d %d %d", &n, &m, &d);
     for (int i = 1; i <= m; i++)
     {
-        int a, b, d, t;
-        scanf("%d %d %d %d", &a, &b, &d, &t);
-        aa.push_back({a, b, d, t});
+        int a, b, c;
 
+        scanf("%d %d %d", &a, &b, &c);
+        if (i < n)
+            aa.push_back({a, b, c, 0});
+        else
+            aa.push_back({a, b, c, 1});
     }
     sort(aa.begin(), aa.end());
 
-for(int i=1;i<=q;i++){
-    scanf("%d %d", &qu[i].f, &qu[i].s);
-}
-sort(qu+1, qu+q+1);
-for(int k=1;k<=q;k++){
-    int mid, mxt, cnt=0;
-    mid = qu[k].f;  mxt = qu[k].s;
-    if(imp[mid]){
-        printf("NO\n");
-        continue;
-    }
     for (int i = 1; i <= n; i++)
     {
         par[i] = i;
     }
-    for (int i = 0; i < aa.size(); i++)
+    int i;
+        maxc = 0;
+
+    for (i = 0; i < aa.size(); i++)
     {
         if (cnt == n - 1)
         {
             break;
         }
-        if(aa[i].t<=mxt&&aa[i].d>=mid){
         if (merge(aa[i].a, aa[i].b))
         {
+            maxc = aa[i].c;
             cnt++;
-        }
+
+            if (aa[i].d)
+            {
+
+                days++;
+            }
+
         }
     }
-    if(cnt==n-1)printf("YES\n");
-    else{ printf("NO\n"); imp[mid]=true;}
+    if (aa[i - 1].d)
+    {
+        for (int i = 1; i <= n; i++)
+        {
+            par[i] = i;
+        }
+        for (int i = 0; i < aa.size(); i++)
+        {
+            auto e = aa[i];
+            if (find(e.a) != find(e.b))
+            {
+                if (e.c < maxc || (e.c == maxc && !e.d))
+                    merge(e.a, e.b);
+                else if (!e.d && e.c <= d)
+                {
+                    printf("%d\n", days - 1);
+                    return 0;
+                }
+            }
+        }
+    }
 
-
-}
+    printf("%d\n", days);
     return 0;
 }
