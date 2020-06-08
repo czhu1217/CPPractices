@@ -42,45 +42,51 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const ll MM = 1e5+5;
-ll n, l, r, y , ans[MM];
-map<ll, ll> cnt;
-map<ll, vector<ll>> ve;
-vector<ll> qu;
+const ll MM = 2e5+5;
+ll n, ddl[MM], bit[MM], ans[MM];
+priority_queue<ll> pq;
+vector<ll> v[MM];
+ll query(ll pos){
+    ll sum=0;
+    for(ll i=pos;i>0;i-=i&-i){
+        sum+=bit[i];
+    }
+    return sum;
+}
 
+void update(ll pos, ll v){
+    for(ll i=pos; i<=n;i+=i&-i){
+        bit[i]+=v ;
+    }
+}
 int main(){
-    memset(ans, 0, sizeof ans);
-    cin >> n; cin >> l >> r >> y;
-    for(ll i=1, ai, v, h;i<=n;i++){
-        cin >> ai >> v>> h;
-        ll lft = ai + y*(-h)/v;
-        ll rt = ai + y*h/v;
-        if(y*h%v==0){ rt--; lft++;}
-        rt = min(r, rt);
-        lft = max(lft, l);
-        ve[lft].pb(rt+1);
-        qu.pb(lft); qu.pb(rt+1);
-    }
-    qu.pb(l); qu.pb(r);
-    sort(qu.begin(), qu.end());
-    qu.erase(unique(qu.begin(), qu.end()), qu.end());
+    cin.tie(0); cin.sync_with_stdio(0);
+    cin >> n;
 
-    ll cur=0;
-    for(int i=0;i<qu.size();i++){
-        for(auto e:ve[qu[i]]){
-            cur++; cnt[e]++;
+    for(ll i=1;i<=n;i++){
+        cin >> ddl[i];
+        v[ddl[i]].pb(i);
+    }
+    for(ll i=n;i>0;i--){
+        for(auto e:v[i]){
+            pq.push(e);
         }
-        cur -= cnt[qu[i]];
-        int nxt;
-        if(i+1==qu.size()) nxt = r+1;
-        else nxt = qu[i+1];
-        ans[cur] += nxt - qu[i];
-
+        if(pq.empty()){
+            cout << -1 << "\n";
+            return 0;
+        }
+        ans[i] = pq.top(); pq.pop();
+        
     }
-    cout << ans[0] << "\n";
-    for(int i=1;i<=n;i++){
-        ans[i] += ans[i-1];
-        cout << ans[i] << "\n";
+    ll res = 0; ll cur=0;
+ 
+    for(ll i=n;i>0;i--){
+        res += query(ans[i]);
+        update(ans[i], 1);
     }
+    cout << res << "\n";
     return 0;
+
+
+
 }

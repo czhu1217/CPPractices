@@ -42,45 +42,41 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const ll MM = 1e5+5;
-ll n, l, r, y , ans[MM];
-map<ll, ll> cnt;
-map<ll, vector<ll>> ve;
-vector<ll> qu;
-
-int main(){
-    memset(ans, 0, sizeof ans);
-    cin >> n; cin >> l >> r >> y;
-    for(ll i=1, ai, v, h;i<=n;i++){
-        cin >> ai >> v>> h;
-        ll lft = ai + y*(-h)/v;
-        ll rt = ai + y*h/v;
-        if(y*h%v==0){ rt--; lft++;}
-        rt = min(r, rt);
-        lft = max(lft, l);
-        ve[lft].pb(rt+1);
-        qu.pb(lft); qu.pb(rt+1);
-    }
-    qu.pb(l); qu.pb(r);
-    sort(qu.begin(), qu.end());
-    qu.erase(unique(qu.begin(), qu.end()), qu.end());
-
-    ll cur=0;
-    for(int i=0;i<qu.size();i++){
-        for(auto e:ve[qu[i]]){
-            cur++; cnt[e]++;
+const int MM = 2e5+5;
+ll n, sz[MM], dp[MM], pa[MM], a[MM], len[MM]; vector<int> adj[MM];
+void dfs1(int u, int p){
+    sz[u] = 1; dp[u] = 0;
+    for(auto v:adj[u]){
+        if(v!=p){
+            dfs1(v, u);
+            sz[u] += sz[v]; 
+            dp[u] += dp[v] + sz[v];
         }
-        cur -= cnt[qu[i]];
-        int nxt;
-        if(i+1==qu.size()) nxt = r+1;
-        else nxt = qu[i+1];
-        ans[cur] += nxt - qu[i];
-
     }
-    cout << ans[0] << "\n";
+}
+void dfs2(int u, int p){
+    len[u] = dp[u]*(n-sz[u]+1)+pa[u]*sz[u];
+    for(int v:adj[u]){
+        if(v==p)continue;
+        len[u] += (sz[u]-sz[v]-1)*(dp[v]+sz[v]);
+        pa[v] = dp[u]-dp[v]-sz[v]+pa[u]+n-sz[v];
+        dfs2(v, u);
+    }
+}
+int main(){
+    cin >> n;
+    for(int i=1;i<=n;i++)cin >> a[i];
+    for(int i=1, u, v;i<n;i++){
+        cin >> u >> v;
+        adj[u].pb(v); adj[v].pb(u);
+    }
+    dfs1(1, 0); dfs2(1, 0);
+    ll ans=0;
     for(int i=1;i<=n;i++){
-        ans[i] += ans[i-1];
-        cout << ans[i] << "\n";
+        ans += a[i]*len[i];
     }
+    cout << ans << "\n";
     return 0;
+
+
 }
