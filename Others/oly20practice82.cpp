@@ -42,23 +42,28 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-int n, m, dif[500005];
-void solve(){
-    cin >> n >> m;
-    for(int i=1;i<=m;i++){
-        int l , r;
-        cin >> l >> r;
-        dif[l]++; dif[r+1]--;
-    }
-    int cnt=0;
-    for(int i=1;i<=n;i++){
-        dif[i] += dif[i-1];
-        if(dif[i]%2)cnt++;
-    }
-    cout << cnt << '\n';
+const int MM = 1e5+5;
+int n, q; vector<int> p;
 
+void solve(){
+    cin >> n >> q;
+
+    for(int i=1;i<=n;i++){
+       int v; cin >> v;
+       p.pb(v);
+    }
+    sort(p.begin(), p.end());
+    for(int i=1;i<=q;i++){
+        int l, r; cin >> l >> r;
+        int ll = lower_bound(p.begin(), p.end(), l)-p.begin();
+        int rr = upper_bound(p.begin(), p.end(), r)-p.begin();
+        cout << rr-ll << "\n";
+    }
 }
 int main(){
     solve();
+    // for(int i=1;i<=10;i++){
+    //     cout << query(i) << "\n";
+    // }
     return 0;
 }
