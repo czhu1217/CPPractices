@@ -1,4 +1,5 @@
 //travelling salesman and vector addition
+//bitmask
 #include <iostream>
 #include <stdio.h>
 #include <cstring>
