@@ -43,6 +43,9 @@ typedef vector<pl> vpl;
 #define all(x) x.begin(), x.end()
 #define ins insert
 void solve(){
+    int n; cin >> n;
+    cout << (n+1)/2 << "\n";
+
 
 }
 int main(){
