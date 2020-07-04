@@ -1,12 +1,23 @@
 
-#include <bits/stdc++.h>
- 
-using namespace std;
- 
+#include <stdio.h>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <math.h>
+#include <map>
+#include <set>
+#include <unordered_set>
+#include <bitset>
+#include <queue>
+#include <unordered_map>
+#include <string>
+#include <climits>
+#define f first
+#define s second
+using namespace std; 
 typedef long long ll;
 typedef long double ld;
-typedef complex<ld> cd;
- 
 typedef pair<int, int> pi;
 typedef pair<ll,ll> pl;
 typedef pair<ld,ld> pd;
@@ -16,7 +27,6 @@ typedef vector<ld> vd;
 typedef vector<ll> vl;
 typedef vector<pi> vpi;
 typedef vector<pl> vpl;
-typedef vector<cd> vcd;
  
 #define FOR(i, a, b) for (int i=a; i<=(b); i++)
 #define F0R(i, a) for (int i=0; i<(a); i++)
@@ -32,23 +42,20 @@ typedef vector<cd> vcd;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
- 
-mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
- 
-const int MOD = 1000000007;
-const char nl = '\n';
-const int MX = 100001; //check the limits, dummy
- 
-int main() {
-	ios_base::sync_with_stdio(0); cin.tie(0);    
-	
-    int T; cin >> T;
-    while(T--) {
+int a[300005];
+void solve(){
+    int n; cin >> n;
+   
+    FOR(i, 1, n){
+        cin >> a[i];
     }
-	
-	return 0;
+    if(a[n]>a[1]) cout << "YES\n";
+    else cout << "NO\n";
+    
+
 }
- 
-// read the question correctly (ll vs int)
-// template by bqi343
- 
+int main(){
+    int t; cin >> t;
+    while(t--)solve();
+    return 0;
+}
