@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <cstring>
 #include <iostream>
@@ -41,29 +42,28 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const int MM = 2e6+6;
-int n, l; ll dp[MM]; int a[MM];
-
+const int MM = 1e4+4;
+int n, s; int t[MM], f[MM], dp[MM], psaf[MM], psat[MM], cnt[MM];
 int main(){
-    // cin.tie(0); cin.sync_with_stdio(0);
+    ll ans = 0;
     memset(dp, 0x3f, sizeof dp);
-    cin >> n >> l;
-    for(int i=1;i<=n;i++)cin >> a[i];
-    dp[0] = 0; int jj=0;
+    cin >> n >> s;
+    psaf[0] = 0; psat[0]= 0;
     for(int i=1;i<=n;i++){
-        ll sum = a[i]; int temp = 0;
-        for(int j=i-1;j>=jj;j--){
-            ll tt = dp[i];
-            dp[i] = min(dp[i], (ll)pow((sum+i-j-1-l), 2)+dp[j]);
-            sum += a[j];
-            if(dp[i]!=tt){
-                temp = j;
-            }
-        }
-        cout << i <<" "<<temp<<" "<<dp[i]<<"\n";
-        jj =temp;
+        cin >> t[i] >> f[i];
+        psaf[i] = psaf[i-1]+f[i]; psat[i] = psat[i-1]+t[i];
     }
-    for(int i=1;i<=n;i++) cout << dp[i] << " ";
-    cout << dp[n] << "\n";
+    dp[n+1] = 0;int jj=n+1;
+    for(int i=n;i>0;i--){ int temp=0;
+        for(int j = i+1;j<=jj;j++){
+            ll tt = dp[i];
+            dp[i] = min(dp[i], dp[j] + (s+psat[j-1]-psat[i-1])*(psaf[n]-psaf[i-1]));
+            if(dp[i]!=tt)  temp = j;
+        }
+        jj = temp;
+    }
+    cout << dp[1] << "\n";
+
+
     return 0;
 }
