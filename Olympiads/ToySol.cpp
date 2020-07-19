@@ -1,47 +1,25 @@
-//Mateusz Radecki
-#include <stdio.h>
-#include <algorithm>
-#include <vector>
-#include <unordered_set>
-#include <set>
-
-
+#include <bits/stdc++.h>
 using namespace std;
-
+typedef long long ll;
+vector<int> sol;
 int n;
+void fun(int cur, int fact, int sum) {
+	cout << cur << " " << fact << " " << sum << "\n";
+  sol.push_back(sum + cur - 1);
+  for (int i = fact; i * i <= cur; i++) {
+    if (cur % i == 0)
+      fun(cur / i, i, sum + i - 1);
+  }
 
-vector <int> divi;
-vector <unordered_set<int>> res;
-
-int main()
-{
-	scanf("%d", &n);
-	for (int i=1; i*i<=n; i++)
-	{
-		if (!(n%i))
-		{
-			divi.push_back(i);
-			if (n/i!=i)
-				divi.push_back(n/i);
-		}
-	}
-	sort(divi.begin(), divi.end());
-    for(int i=0;i<divi.size();i++){
-        printf("%d ", divi[i]);
-    }
-	res.resize(divi.size());
-	res[0].insert(0);
-	for (int i=0; i<(int)divi.size(); i++)
-		for (int j=0; j<i; j++)
-			if (!(divi[i]%divi[j]))
-				for (int l : res[j])
-					res[i].insert(l+divi[i]/divi[j]-1);
-	set <int> final_res;
-	for (int i : res.back())
-		final_res.insert(i);
-	printf("%d\n", (int)final_res.size());
-	for (int i : final_res)
-		printf("%d ", i);
-	printf("\n");
-	return 0;
+}
+int main() {
+  cin >> n;
+  fun(n, 2, 0);
+  sort(sol.begin(), sol.end());
+  int tot = unique(sol.begin(), sol.end()) - sol.begin();
+  cout << tot << "\n";
+  for(int i = 0; i < tot; i++) {
+    cout << sol[i] << " ";
+  }
+  cout << endl;
 }
