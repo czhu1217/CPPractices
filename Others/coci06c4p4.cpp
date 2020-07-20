@@ -42,11 +42,11 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-int r, s, n;
-int cur[303][2003], pre[303][2003];
-
+const int log = 1e9+7;
+int n, c;
 int main(){
-    cin >> r >> s >> n;
+    cin >> n >> c;
+
 
     return 0;
 }

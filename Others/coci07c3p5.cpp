@@ -1,5 +1,3 @@
-
-//digit dp
 #include <stdio.h>
 #include <cstring>
 #include <iostream>
@@ -14,6 +12,7 @@
 #include <unordered_map>
 #include <string>
 #include <climits>
+#include <sstream>
 #define f first
 #define s second
 using namespace std; 
@@ -43,42 +42,54 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-ll a, b; ll dp[20][10][10][2];
-string st;
-//dp[first][second][length][already smaller than original]
-ll  fun(ll pos, ll last, ll second, bool all){
-    if(pos>=st.size())return 1;
-    ll &res = dp[pos][last][second][all];
-    if(res>=0) return res;
+//dp[len][left][all]
+ll dp[20][140][2]; 
+ll a, b, s; string str;
+ll fun(ll len, ll left, bool all){
+    if(len==str.size()&&left!=0) return 0;
+    if(len==str.size()&&left==0){
+        return 1;}
+    if(left<0)return 0;
+    ll &res = dp[len][left][all];
+    if(res>=0)return res;
     res = 0;
-    ll lim = all?9:st[pos]-'0';
-    for(ll i=0;i<=lim;i++){
-        if(i!=last&&i!=second)
-        res += fun(pos+1, i, last, all||(i!=lim));
+    ll lim = all?9:str[len]-'0';
+    for(ll i=lim;i>=0;i--){
+        if(left-i>=0){ 
+            res += fun(len+1, left-i, all||(i!=lim));
+        }
     }
     return res;
 
 }
-ll solve(ll num){
+string ss;
+ll solve(ll n){
+    ll ans=0;
+    if(n<0)return 0;
     memset(dp, -1, sizeof dp);
-
-    if(num<0)return 0;
-    ll ans =1;
-    st = to_string(num);
-    ll lim = st[0]-'0';
-    for(ll i=1;i<=lim;i++)
-        ans += fun(1, i, i, i!=lim);
+    str = to_string(n);
+    ll lim = str[0]-'0';
+    for(ll i=lim;i>0;i--)
+        ans += fun(1, s-i, i!=lim);
     
-    for(ll k=2;k<=st.size();k++)
-        for(ll i=1;i<10;i++)
-            ans += fun(k, i, i, 1 );
+    for(ll k=2;k<=str.size();k++)
+        for(ll i=9;i>0;i--)
+            ans += fun(k, s-i, 1);
+
     return ans;
+
 }
 int main(){
-
-    cin >> a >> b;
+    cin >> a >> b >> s;
     cout << solve(b) - solve(a-1) << "\n";
-
-    
+    ll lo = a-1, hi = b;
+    while(hi-lo>1){
+        ll mid = (lo+hi)/2;
+        if(solve(mid) - solve(lo)>0)
+            hi = mid;
+        else
+            lo = mid;
+    }
+    cout << hi << "\n";
     return 0;
 }
