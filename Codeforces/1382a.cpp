@@ -42,23 +42,28 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const int LOG = 1e9+7;
-int n, c;
-ll cur[10005], pre[10005];
-int main(){
-    cin >> n >> c;
-    memset(pre, 0, sizeof pre);
-    if(n==1){cout << "0\n"; return 0;}
-    pre[0] = 1; pre[1] = 1;
-    for(int i=3;i<=n;i++){
-        memset(cur, 0, sizeof cur);
-        for(int j=0;j<=min(c, i*(i-1)/2);j++){
-            cur[j] = ((cur[j]+pre[j])%LOG + cur[j-1])%LOG;
-            if(j-i>=0) cur[j] = (cur[j] - pre[j-i]+LOG)%LOG;
-        }
-        swap(cur, pre);
+void solve(){
+    int n, m; cin >> n >> m;
+    int a[1002], b[1002];bool vis[1002];
+    memset(vis, 0, sizeof vis);
+    for(int i=1;i<=n;i++){
+        cin >> a[i];
+        vis[a[i]] = 1;
     }
-    cout << pre[c] << "\n";
-    return 0;
+    bool pos = 0;
+    for(int i=1;i<=m;i++){
+        cin >> b[i];
+        if(vis[b[i]]&&!pos){
+            cout << "YES\n";
+            cout << 1 << " "  << b[i] << "\n";
+            pos = 1;
+        }
+    }
+    if(!pos)cout << "NO\n";
 
+}
+int main(){
+    int t; cin >> t;
+    while(t--)solve();
+    return 0;
 }

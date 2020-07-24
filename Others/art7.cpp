@@ -85,8 +85,6 @@ int solve(string k){
 int main(){
     ll ans = 0;
     cin >> k;
-
-    
     cout << solve(k) << "\n";
     return 0;
 }

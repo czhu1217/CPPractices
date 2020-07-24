@@ -41,24 +41,29 @@ typedef vector<pl> vpl;
 #define lb lower_bound
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
+    int a[100005];bool win[100005];
 #define ins insert
-const int LOG = 1e9+7;
-int n, c;
-ll cur[10005], pre[10005];
-int main(){
-    cin >> n >> c;
-    memset(pre, 0, sizeof pre);
-    if(n==1){cout << "0\n"; return 0;}
-    pre[0] = 1; pre[1] = 1;
-    for(int i=3;i<=n;i++){
-        memset(cur, 0, sizeof cur);
-        for(int j=0;j<=min(c, i*(i-1)/2);j++){
-            cur[j] = ((cur[j]+pre[j])%LOG + cur[j-1])%LOG;
-            if(j-i>=0) cur[j] = (cur[j] - pre[j-i]+LOG)%LOG;
+void solve(){
+    int n; cin >> n;
+    FOR(i, 1, n)cin >> a[i];
+    
+    int cnt = 0;
+    win[n] = 1;
+    for(int i=n-1;i>0;i--){
+        if(a[i]==1){
+            if(win[i+1]) win[i] = 0;
+            else win[i] = 1;
         }
-        swap(cur, pre);
-    }
-    cout << pre[c] << "\n";
-    return 0;
+        else{
+            win[i] = 1;
+        }
 
+    }
+    if(win[1])cout << "First\n";
+    else cout << "Second\n";
+}
+int main(){
+    int t; cin >> t;
+    while(t--)solve();
+    return 0;
 }

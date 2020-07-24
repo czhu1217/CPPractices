@@ -15,7 +15,7 @@
 typedef long long ll;
 using namespace std;
 typedef pair<int, int> pi;
-stack<pi> st;
+stack<int> st;
 long n;
 ll ans = 0;
 
@@ -24,17 +24,15 @@ int main(){
     for(int i=0, x;i<n;++i){
         int cnt = 1;
         cin >> x;
-        while((!st.empty())&&(st.top().first<=x)){
-            ans+=st.top().second;
-            if(st.top().first==x){
-                cnt += st.top().second;
-            }
+        while((!st.empty())&&(st.top()<x)){
+            ans++;
             st.pop();
         }
         if(!st.empty()){
             ans++;
         }
-        st.push({x, cnt});
+        st.push(x);
+        cout << ans << "\n";
 
     }
     

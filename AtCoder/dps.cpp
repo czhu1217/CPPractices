@@ -43,22 +43,47 @@ typedef vector<pl> vpl;
 #define all(x) x.begin(), x.end()
 #define ins insert
 const int LOG = 1e9+7;
-int n, c;
-ll cur[10005], pre[10005];
-int main(){
-    cin >> n >> c;
-    memset(pre, 0, sizeof pre);
-    if(n==1){cout << "0\n"; return 0;}
-    pre[0] = 1; pre[1] = 1;
-    for(int i=3;i<=n;i++){
-        memset(cur, 0, sizeof cur);
-        for(int j=0;j<=min(c, i*(i-1)/2);j++){
-            cur[j] = ((cur[j]+pre[j])%LOG + cur[j-1])%LOG;
-            if(j-i>=0) cur[j] = (cur[j] - pre[j-i]+LOG)%LOG;
-        }
-        swap(cur, pre);
+string k; int d;
+int dp[10005][2][102];
+int fun(int len, bool all, int sum){
+    if(len==k.length()){
+        if(sum)return 0;
+        return 1;
     }
-    cout << pre[c] << "\n";
-    return 0;
+    int &res = dp[len][all][sum];
+    if(res>=0) return res;
+    res = 0;
+    int lim = all?9:k[len]-'0';
+    for(int i=0;i<=lim;i++){
+        res += fun(len+1, all||i!=lim, (sum+i)%d);
+        res%=LOG;
+    }
+    return res;
 
+
+}
+int solve(string k){
+    memset(dp, -1, sizeof dp);
+    string str = k;
+    int ans=0;
+    int lim = k[0]-'0';
+    for(int i=1;i<=lim;i++){
+        ans += fun(1, lim!=i, i%d); ans %= LOG;
+    }
+    for(int k=2;k<=str.length();k++){
+        for(int i=1;i<10;i++){
+            ans += fun(k, 1, i%d);
+            ans %= LOG;
+        }
+    }
+    return ans;
+
+
+
+}
+int main(){
+    cin >> k >> d;
+    cout << solve(k) << "\n";
+
+    return 0;
 }
