@@ -42,7 +42,29 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
+int a[102];
 void solve(){
+    int n; cin >> n;
+    FOR(i, 1, n) cin >> a[i];
+    char ans[102][102];
+    for(int i=1;i<=100;i++){
+        ans[0][i] = 'a';
+    }
+   for(int i=1;i<=n;i++){
+       for(int j=1;j<=100;j++){
+           if(a[i]>=j)ans[i][j] = ans[i-1][j];
+           else{
+               if(ans[i-1][j]=='a')ans[i][j] = 'b';
+               else ans[i][j] = 'a';
+           }
+       }
+
+   }
+    for(int i=0;i<=n;i++){
+        for(int j=1;j<=100;j++)cout << ans[i][j];
+        cout << "\n";
+
+    }
 
 }
 int main(){
