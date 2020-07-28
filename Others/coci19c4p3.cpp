@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <cstring>
 #include <iostream>
@@ -41,28 +42,16 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const int MM = 3005;
-int n, k; ld dp[MM][MM];
-deque<int> dq;
-
+const int MM = 102, MK = 1e4+5;
+int dp[MK][MM];
+int n, l, r, a[MM], K;
 int main(){
-    memset(dp, 0, sizeof dp);
-    cin >> n >> k;
-    memset(dp[0], 0, sizeof dp[0]);
-    for(int i=1;i<=k;i++){
-        dp[i][0] = 0;
-        for(int j=1;j<=n;j++){
-            int best=0;
-            for(int x=0; x<j;x++){
-                ld ori = dp[i][j];
-                dp[i][j] = max(dp[i][j], dp[i-1][x]+1.0/(n-x)*(j-x));
-                if(dp[i][j]>ori) best = x;
-            }
-            cout << best << "\n";
-        }
-    }
-    double ans = dp[k][n];
-    printf("%.9f\n", ans);
+    memset(dp, 0x3f, sizeof dp);
+     cin >> n >> l >> r >> K;
+     FOR(i, 1, n)cin >> a[i];
+     dp[0][0] = 0;
+     
 
+    
     return 0;
 }

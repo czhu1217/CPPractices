@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <cstring>
 #include <iostream>
@@ -41,28 +42,25 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const int MM = 3005;
-int n, k; ld dp[MM][MM];
-deque<int> dq;
-
+const int MM = 2e6+5;
+int cnt[MM], ans[MM], n; ll res=0;
 int main(){
-    memset(dp, 0, sizeof dp);
-    cin >> n >> k;
-    memset(dp[0], 0, sizeof dp[0]);
-    for(int i=1;i<=k;i++){
-        dp[i][0] = 0;
-        for(int j=1;j<=n;j++){
-            int best=0;
-            for(int x=0; x<j;x++){
-                ld ori = dp[i][j];
-                dp[i][j] = max(dp[i][j], dp[i-1][x]+1.0/(n-x)*(j-x));
-                if(dp[i][j]>ori) best = x;
-            }
-            cout << best << "\n";
+    memset(cnt, 0, sizeof cnt);
+    memset(ans, 0, sizeof ans);
+    cin >> n;
+    FOR(i, 1, n){
+        int t; cin >> t;
+        cnt[t]++;
+    }
+    for(int i=1;i<MM;i++){
+        for(int j=1;j*i<MM;j++){
+            ans[i] += cnt[i*j];
         }
     }
-    double ans = dp[k][n];
-    printf("%.9f\n", ans);
-
+    for(int i=1;i<MM;i++){
+        if(ans[i]<=1)continue;
+        res = max(res, (ll)ans[i]*i);
+            }
+    cout << res << "\n";
     return 0;
 }

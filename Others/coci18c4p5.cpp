@@ -1,3 +1,5 @@
+// alien's trick, monotpnim deque, binary search
+//coci18c4p5
 #include <stdio.h>
 #include <cstring>
 #include <iostream>
@@ -37,32 +39,42 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const int N=1e5+5,M=205;
-int n,k,a[N], par[N][M];
-long long psa[N],dpc[N],dpp[N];
+const int MM = 1e5+5;
+const ld lmt = 1e-12;
+int n,k,cnt[MM];
 deque<int> dq;
-
-double slope(int i,int j) {
-    if(psa[i]==psa[j]) return -1e18;
-    return 1.0*((dpp[i]-psa[i]*psa[i])-(dpp[j]-psa[j]*psa[j]))/(psa[j]-psa[i]);
+ld dp[MM];
+inline ld slope(int x,int y)
+{
+    return (dp[x] - dp[y]) / (x - y);
 }
-int main() {
-    scanf("%d%d",&n,&k);
-    for(int i=1;i<=n;++i) scanf("%d",&a[i]),psa[i]=psa[i-1]+a[i];
-    for(int j=1;j<=k;++j) {
-        dq.clear();
-        dq.pb(0);
-        for(int i=1;i<=n;++i) {
-            while(dq.size()>=2&&slope(dq[0], dq[1])<=psa[i]) dq.pop_front();
-            int best = dq[0];
-            dpc[i]=dpp[best]+psa[best]*(psa[i]-psa[best]);
-            par[i][j]=best;
-            while(dq.size()>=2&&slope(dq[dq.size()-2],dq[dq.size()-1])>=slope(dq[dq.size()-1],i)) dq.pop_back();
-            dq.pb(i);
-        }
-        swap(dpp, dpc);
+int check(ld cost)
+{
+    dq.clear();dq.pb(0);
+    for(register int i = 1;i <= n;++i)
+    {
+        while(dq.size()>=2&&slope(dq[0], dq[1])>1.0/i) dq.pop_front();
+        int best = dq[0];
+        dp[i] = dp[best] + (ld)(i - best) / i - cost,cnt[i] = cnt[best] + 1;
+        while(dq.size()>=2&&slope(dq[dq.size()-2], dq[dq.size()-1])<slope(dq[dq.size()-1], i)) dq.pop_back();
+        dq.pb(i);
     }
-    printf("%lld\n",dpp[n]);
-    for(int x=n,i=k;i>=1;--i) x=par[x][i],printf("%d%c",x," \n"[i==1]);
+    return cnt[n];
+}
+int main()
+{
+    cin >> n >> k;
+    ld l, r, mid;
+    l = 0,r = 1e6;
+    while(r-l>=lmt){
+        mid = (l + r) / 2;
+        if(check(mid)>=k)
+            l = mid;
+        else
+            r = mid;
+    }
+    check(l);
+    double ans= dp[n] + k * mid ;
+    printf("%.9f\n",ans);
     return 0;
 }

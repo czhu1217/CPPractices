@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <cstring>
 #include <iostream>
@@ -41,28 +42,37 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const int MM = 3005;
-int n, k; ld dp[MM][MM];
-deque<int> dq;
-
-int main(){
-    memset(dp, 0, sizeof dp);
-    cin >> n >> k;
-    memset(dp[0], 0, sizeof dp[0]);
-    for(int i=1;i<=k;i++){
-        dp[i][0] = 0;
-        for(int j=1;j<=n;j++){
-            int best=0;
-            for(int x=0; x<j;x++){
-                ld ori = dp[i][j];
-                dp[i][j] = max(dp[i][j], dp[i-1][x]+1.0/(n-x)*(j-x));
-                if(dp[i][j]>ori) best = x;
-            }
-            cout << best << "\n";
+ll l, r, n, d[20]; ll dp[20][2520][1<<8];
+ll fun(int pos, int rem, int mask, bool lim){
+    if(!lim&&dp[pos][rem][mask]>=0)return dp[pos][rem][mask];
+    ll res = 0;
+    if(pos==0){
+        for(int i=2;i<10;i++){
+            if((mask&(1<<(i-2)))&&rem%i!=0)return 0;
         }
+        return 1;
     }
-    double ans = dp[k][n];
-    printf("%.9f\n", ans);
+    int up = lim?d[pos]:9;
+    for(int i=0;i<=up;i++){
+        int nmask = i>=2?mask|(1<<(i-2)):mask;
+        res += fun(pos-1, (rem*10+i)%2520, nmask, lim&&i==d[pos]);
+    }
+    if(!lim)dp[pos][rem][mask]=res;
+    return res;
+}
+ll calc(ll x){
+    n = 0;
+    for(;x;x/=10) d[++n]=x%10;
+    return fun(n, 0, 0, 1);
+}
+void solve(){
+    cin >> l >> r;
+    cout << calc(r)-calc(l-1) << "\n";
+}
+int main(){
+    memset(dp, -1, sizeof(dp));
 
+    int t; cin >> t;
+    while(t--)solve();
     return 0;
 }
