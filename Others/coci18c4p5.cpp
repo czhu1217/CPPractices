@@ -1,4 +1,4 @@
-// alien's trick, monotpnim deque, binary search
+// alien's trick, monotonic deque, binary search
 //coci18c4p5
 #include <stdio.h>
 #include <cstring>
