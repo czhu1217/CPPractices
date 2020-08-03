@@ -42,30 +42,21 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
+const int MM = 55;
+int a[2*MM]; bool vis[2*MM];
 void solve(){
+    memset(vis, 0, sizeof vis);
+    vector<int> v;
     int n; cin >> n;
-    if(n<31){
-        cout << "NO\n";
+    FOR(i, 1, 2*n)cin >> a[i];
+    FOR(i, 1, 2*n){
+        if(!vis[a[i]]) v.pb(a[i]);
+        vis[a[i]] = 1;
+    }
+    for(auto e:v) cout << e << " ";
+    cout << "\n";
 
-    }
-    else if(n==36){
-        cout << "YES\n";
-        printf("%d %d %d %d\n", 6, 10, 15, 5);
-    }
-    else if(n==40){
-          cout << "YES\n";
-        printf("%d %d %d %d\n", 6, 10, 15, 9);
-    }
-    else if(n==44){
-          cout << "YES\n";
-        printf("%d %d %d %d\n", 6, 10, 15, 13);
-    }
-    
-    else{
-        cout << "YES\n";
-        cout << 6 << " " << 10 << " " << 14 << " " << n-6-10-14 << "\n";
 
-    } 
 
 }
 int main(){

@@ -42,30 +42,44 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
+const int MM = 1e5+2;
+pi p[MM];
+int ans[MM];
+deque<pair<int, pi>> a;
 void solve(){
-    int n; cin >> n;
-    if(n<31){
-        cout << "NO\n";
+    ll ans = 0;
+    int cnt=0;
+    int n, m; cin >> n >> m;
+    for(int i=1, x, y;i<=m;i++){
+        cin >> x >> y;
+        p[i].f = x; p[i].s = y;
+        a.pb({x, {0, i}});
+    }
+    sort(a.begin(), a.end());
+    reverse(a.begin(), a.end());
+    for(int i=0;i<a.size();i++){
+        printf("%d %d %d\n", a[i].f, a[i].s.f, a[i].s.s);
+    }
+    while(cnt<n){
+        if(a.front().s.f==0){
+            ans += a.front().f;
+            cnt++;
+            a.pb({p[a.front().s.s].s, {1, a.front().s.s}});
+            a.pop_front();
+            sort(a.begin(), a.end());
+            reverse(a.begin(), a.end());
+        }
+        else{
+            ans += a.front().f*(n-cnt);
+            cout << ans << "\n";
+            return;
+        }
+    }
+    cout << ans << "\n";
 
-    }
-    else if(n==36){
-        cout << "YES\n";
-        printf("%d %d %d %d\n", 6, 10, 15, 5);
-    }
-    else if(n==40){
-          cout << "YES\n";
-        printf("%d %d %d %d\n", 6, 10, 15, 9);
-    }
-    else if(n==44){
-          cout << "YES\n";
-        printf("%d %d %d %d\n", 6, 10, 15, 13);
-    }
-    
-    else{
-        cout << "YES\n";
-        cout << 6 << " " << 10 << " " << 14 << " " << n-6-10-14 << "\n";
 
-    } 
+
+
 
 }
 int main(){

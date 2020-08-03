@@ -43,29 +43,6 @@ typedef vector<pl> vpl;
 #define all(x) x.begin(), x.end()
 #define ins insert
 void solve(){
-    int n; cin >> n;
-    if(n<31){
-        cout << "NO\n";
-
-    }
-    else if(n==36){
-        cout << "YES\n";
-        printf("%d %d %d %d\n", 6, 10, 15, 5);
-    }
-    else if(n==40){
-          cout << "YES\n";
-        printf("%d %d %d %d\n", 6, 10, 15, 9);
-    }
-    else if(n==44){
-          cout << "YES\n";
-        printf("%d %d %d %d\n", 6, 10, 15, 13);
-    }
-    
-    else{
-        cout << "YES\n";
-        cout << 6 << " " << 10 << " " << 14 << " " << n-6-10-14 << "\n";
-
-    } 
 
 }
 int main(){

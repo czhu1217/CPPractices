@@ -42,31 +42,44 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
+string nee = "abacaba";
+bool val(string t) 
+{
+    bool pos = 1;int cnt=0;
+    for(int i=0;i+6<t.size();i++){
+        pos=1;
+        for(int j=0;j<7;j++){
+            if(nee[j]!=t[i+j])pos=0;
+        }
+        if(pos){
+            cnt++;
+        }
+    }
+    if(cnt==1)return 1;
+
+    else return 0;
+}
 void solve(){
     int n; cin >> n;
-    if(n<31){
-        cout << "NO\n";
-
+    string s; cin >> s;
+    for(int i=0;i+6<n;i++){
+        string t; bool cont=0;
+        for(int j=0;j<n;j++)t += s[j];
+        for(int j=0;j<7;j++){
+            if(s[i+j]!=nee[j]&&s[i+j]!='?'){ cont=1;break;}
+        }
+        if(cont)continue;
+        for(int j=0;j<n;j++){
+            if(j-i>=0&j-i<7) t[j] = nee[j-i];
+            else if(t[j]=='?') t[j] = 'd';
+        }
+        if(val(t)){
+            cout << "YES\n";
+            cout << t << "\n";
+            return;
+        }
     }
-    else if(n==36){
-        cout << "YES\n";
-        printf("%d %d %d %d\n", 6, 10, 15, 5);
-    }
-    else if(n==40){
-          cout << "YES\n";
-        printf("%d %d %d %d\n", 6, 10, 15, 9);
-    }
-    else if(n==44){
-          cout << "YES\n";
-        printf("%d %d %d %d\n", 6, 10, 15, 13);
-    }
-    
-    else{
-        cout << "YES\n";
-        cout << 6 << " " << 10 << " " << 14 << " " << n-6-10-14 << "\n";
-
-    } 
-
+    cout << "NO" << "\n";
 }
 int main(){
     int t; cin >> t;

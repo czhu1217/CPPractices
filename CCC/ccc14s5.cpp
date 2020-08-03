@@ -43,14 +43,14 @@ typedef vector<pl> vpl;
 #define ins insert
 const int MM = 2005;
     double d;
-int n; pi a[MM]; double dpp[MM], dpc[MM]; bool f[2*MM];
+int n; pi a[MM]; int dpp[MM], dpc[MM], di[MM]; bool f[2*MM];
 double dis(int i, int j){
     return ((a[i].f-a[j].f)*(a[i].f-a[j].f)+(a[i].s-a[j].s)*(a[i].s-a[j].s));
 }
 struct ed{
     int d, x, y;
     bool  operator<(const ed &e){
-        return d==e.d?x<e.x:d<e.d;
+        return d<e.d;
     }
 }; vector<ed> v;
 int main(){
@@ -64,8 +64,23 @@ int main(){
     sort(v.begin(), v.end());
     for(auto &e:v){
         int x = e.x, y = e.y, d=e.d;
-        
+        if(di[x]!=d){
+            di[x] = d;
+            dpp[x] = dpc[x];
+        }
+        if(di[y]!=d){
+            di[y] = d;
+            dpp[y] = dpc[y];
+        }
+        if(x!=0){
+            dpc[x] = max(dpc[x], dpp[y]+1);
+            dpc[y] = max(dpc[y], dpp[x]+1);
+        }
+        else{
+            dpc[x] = max(dpc[x], dpp[y]);
+        }
     }
-
+    cout << dpc[0]+1 << "\n";
+    return 0;
 
 }
