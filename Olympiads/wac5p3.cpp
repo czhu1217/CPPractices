@@ -1,4 +1,5 @@
 
+
 #include <stdio.h>
 #include <cstring>
 #include <iostream>
@@ -42,11 +43,41 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-void solve(){
-
-}
+const int MM = 2e5+1;
+int n, a[MM], cnt[MM], fre[MM]; bool done[MM];
+int ans, res, cur, pre;
 int main(){
-    int t; cin >> t;
-    while(t--)solve();
+    scanf("%d", &n);
+
+    for(int i=1;i<=n;i++)scanf("%d", &a[i]);
+    ans=n;
+    for(int i=2;i*i<=n;i++){
+        memset(cnt, 0, sizeof cnt);
+        memset(fre, 0, sizeof fre);
+        for(int j=1;j<=i*i;j++){
+            cnt[a[j]]++;
+        }
+        for(int j=1;j<=n;j++){
+            if(cnt[j]){
+                fre[cnt[j]]++;
+            }
+        }
+        if(fre[i]==i){ ans++;}
+        for(int j=i*i+1; j<=n;j++){
+            cur = a[j], pre = a[j-i*i];
+            fre[cnt[cur]]--;
+            cnt[cur]++;
+            fre[cnt[cur]]++;
+            fre[cnt[pre]]--;
+            cnt[pre]--;
+            fre[cnt[pre]]++;
+            if(fre[i]==i){
+                // cout << i << "\n"; 
+                ans++;
+            }
+        }
+    }
+    printf("%d\n", ans);
+
     return 0;
 }
