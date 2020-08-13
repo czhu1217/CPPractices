@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <cstring>
 #include <iostream>
@@ -12,8 +13,7 @@
 #include <unordered_map>
 #include <string>
 #include <climits>
-#define f first
-#define s second
+#include <stack>
 using namespace std; 
 typedef long long ll;
 typedef long double ld;
@@ -41,28 +41,39 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const int MM = 3005;
-int n, k; ld dp[MM][MM];
-deque<int> dq;
-
+int n, m, h[2005];
+bool a[2005][2005];
+char c;
+stack<int> st;
+ll ans=0; int idx;
+ll calc(int x){
+    return 1LL*(x+1)*x/2;
+}
 int main(){
-    memset(dp, 0, sizeof dp);
-    cin >> n >> k;
-    memset(dp[0], 0, sizeof dp[0]);
-    for(int i=1;i<=k;i++){
-        dp[i][0] = 0;
-        for(int j=1;j<=n;j++){
-            int best=0;
-            for(int x=0; x<j;x++){
-                ld ori = dp[i][j];
-                dp[i][j] = max(dp[i][j], dp[i-1][x]+1.0/(n-x)*(j-x));
-                if(dp[i][j]>ori) best = x;
-            }
-            cout << best << "\n";
+    memset(a, 0, sizeof a);
+    cin >> n >> m;
+    FOR(i, 1, n){
+        FOR(j, 1, m){
+            cin >> c;
+            if(c=='#') a[i][j]=0;
+            else a[i][j]=1;
         }
     }
-    double ans = dp[k][n];
-    printf("%.9f\n", ans);
-
+    int prev = 0;
+    FOR(i, 1, n){
+        while(!st.empty()) st.pop();
+        FOR(j, 1, m+1){
+           if(a[i][j])h[j]++;
+           else h[j]=0;
+           while((!st.empty())&&h[j]<h[st.top()]){
+               int idx = st.top(); st.pop();
+               int rit = j-idx, lft = idx - (st.empty()?0:st.top());
+               ans += calc(h[idx])*(lft*calc(rit)+rit*calc(lft)-lft*rit);
+           }
+           st.push(j);
+        }
+ 
+    }
+    cout << ans << "\n";
     return 0;
 }

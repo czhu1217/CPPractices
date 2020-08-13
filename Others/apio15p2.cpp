@@ -41,46 +41,16 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-int n, m, h[2005];
-bool a[2005][2005];
-char c;
-stack<pi> st;
-ll ans=0; int idx;
-ll calc(int x){
-    return 1LL*(x+1)*x/2;
-}
+const int MM = 3e4+5;
+int n, m;
+pi doge[MM];
 int main(){
-    memset(a, 0, sizeof a);
     cin >> n >> m;
-    FOR(i, 1, n){
-        FOR(j, 1, m){
-            cin >> c;
-            if(c=='#') a[i][j]=0;
-            else a[i][j]=1;
-        }
-    }
 
-    FOR(i, 1, n){
-        // printf("i %d\n", i);
-        FOR(j, 1, m+1){
-            idx = j;
-            if(a[i][j]) h[j]++;
-            else h[j]=0;
-            cout << h[j] << " ";
-            while((!st.empty())&&(h[j]<st.top().f)){
-                pi tmp = st.top(); st.pop();
-                idx = tmp.s;
-                ans += calc(tmp.f)*calc(j-tmp.s);
-            // printf("%d %d %d %d\n", i, j, h[j], ans);
-
-            }
-            if((j<=m))
-            st.push({h[j], idx});
-            // printf("%d %d\n", j, ans);
-        }
-        cout << "\n";
-        
+    for(int i=1;i<=m;i++){
+        cin >> doge[i].f >> doge[i].s;
     }
-    cout << ans << "\n";
+    
+
     return 0;
 }
