@@ -41,33 +41,41 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-int n, m, s1, s2;
-void solve(){
-    cin >> n >> m >> s1 >> s2;
-    bool tmp = 1;
-    cout << s1 << " " << s2 << "\n";
-    for(int i=1;i<=m;i++){
-        if(i!=s2) cout << s1 << " " << i << "\n";
-    }
-    tmp = 0;
-    for(int i=1;i<=n;i++){
-        if(i==s1)continue;
-        if(tmp){
-            for(int j=1;j<=m;j++){
-                cout << i << " " << j << "\n";
-            }
-        }
-        else{
-            for(int j=m;j>0;j--){
-                cout << i << " " << j << "\n";
-            }
-        }
-        tmp = !tmp;
-    }
-
-
-}
+int n, d, m;
+const int MM = 1e5+5;
+int a[MM], psa1[MM], psa2[MM];
+vector<int> v, g;
 int main(){
-    solve();
+    ll sum=0, ans=0;
+    cin >> n >> d >> m;
+    for(int i=1, x;i<=n;i++){
+        cin >> x;
+        if(x>m)v.pb(x);
+        else g.pb(x);
+    }
+    sort(all(v));
+    reverse(all(v));
+    sort(all(g));
+    // for(auto e:v) cout << e << " ";
+    // cout << "\n";
+    // for(auto e:g) cout << e << " ";
+    for(int i=1;i<=v.size();i++){
+        psa1[i] = psa1[i-1]+v[i-1];
+    }
+    for(int i=1;i<=g.size();i++){
+        psa2[i] = psa2[i-1]+g[i-1];
+    }
+    for(int i=0;i<=v.size();i++){
+        ll res=0;
+        res += psa1[(int)ceil((int)v.size()/d)+i];
+        res += psa2[g.size()];
+        res -= psa2[d*i];
+        if(res>ans)ans=res;
+        
+    }
+    cout << ans << "\n";
+
+
+
     return 0;
 }

@@ -13,7 +13,8 @@
 #include <unordered_map>
 #include <string>
 #include <climits>
-#include <stack>
+#define f first
+#define s second
 using namespace std; 
 typedef long long ll;
 typedef long double ld;
@@ -41,33 +42,15 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-int n, m, s1, s2;
 void solve(){
-    cin >> n >> m >> s1 >> s2;
-    bool tmp = 1;
-    cout << s1 << " " << s2 << "\n";
-    for(int i=1;i<=m;i++){
-        if(i!=s2) cout << s1 << " " << i << "\n";
-    }
-    tmp = 0;
-    for(int i=1;i<=n;i++){
-        if(i==s1)continue;
-        if(tmp){
-            for(int j=1;j<=m;j++){
-                cout << i << " " << j << "\n";
-            }
-        }
-        else{
-            for(int j=m;j>0;j--){
-                cout << i << " " << j << "\n";
-            }
-        }
-        tmp = !tmp;
-    }
-
+    int n; cin >> n;
+    if(n%2==0)cout << (n+2)/2 << "\n";
+    else
+     cout << (n+1)/2 << "\n";
 
 }
 int main(){
-    solve();
+    int t; cin >> t;
+    while(t--)solve();
     return 0;
 }

@@ -41,57 +41,46 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-int n, m;
-const int MM = 203;
-
-int a[MM], b[MM], c[MM];
-bool ab[MM][12], bb[MM][12];
-vector<int> choices[MM];
-void solve(){
-    memset(c, 0x3f, sizeof c);
-    cin >> n >> m;
-    FOR(i, 1, n)cin >> a[i];
-    FOR(i, 1, m) cin >> b[i];
-    ll ans=0;
-    bool pos = 1, pos2=0;
-    for(int i=1;i<=n;i++){
-        for(int j=1;j<=m;j++) choices[i].pb(b[j]);
-    }
-
-    for(int i=9;i>=0;i--){
-        pos = 1;
-        vector<int> v[MM];
-        for(int j=1;j<=n;j++){
-            // for(auto e:choices[j]) cout << e << " ";
-            // cout << "\n";
-                     
-            for(auto &e:choices[j]){
-                int tmp = a[j]&e;
-                if((tmp&(1<<i))==0){
-                     v[j].pb(e);
-                }
-                
-            }
-            if(v[j].empty()){
-                pos = 0; break;
-            }
-
-        }
-        if(!pos){
-            ans += (1<<i);
-            // cout << i << "\n";
-
-        } 
-        else{
-            swap(v, choices);
-        }
-        // cout << "\n";
-    }
-    cout << ans << "\n";
-
-
+int n, m, h[2005];
+bool a[2005][2005];
+char c;
+stack<pi> st;
+ll ans=0; int idx;
+ll calc(int x){
+    return 1LL*(x+1)*x/2;
 }
 int main(){
-    solve();
+    memset(a, 0, sizeof a);
+    cin >> n >> m;
+    FOR(i, 1, n){
+        FOR(j, 1, m){
+            cin >> c;
+            if(c=='#') a[i][j]=0;
+            else a[i][j]=1;
+        }
+    }
+
+    FOR(i, 1, n){
+        // printf("i %d\n", i);
+        FOR(j, 1, m+1){
+            idx = j;
+            if(a[i][j]) h[j]++;
+            else h[j]=0;
+            cout << h[j] << " ";
+            while((!st.empty())&&(h[j]<st.top().f)){
+                pi tmp = st.top(); st.pop();
+                idx = tmp.s;
+                ans += calc(tmp.f)*calc(j-tmp.s);
+            // printf("%d %d %d %d\n", i, j, h[j], ans);
+
+            }
+            if((j<=m))
+            st.push({h[j], idx});
+            // printf("%d %d\n", j, ans);
+        }
+        cout << "\n";
+        
+    }
+    cout << ans << "\n";
     return 0;
 }

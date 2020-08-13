@@ -13,7 +13,8 @@
 #include <unordered_map>
 #include <string>
 #include <climits>
-#include <stack>
+#define f first
+#define s second
 using namespace std; 
 typedef long long ll;
 typedef long double ld;
@@ -41,57 +42,36 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-int n, m;
-const int MM = 203;
+const int MM = 1e5+5;
 
-int a[MM], b[MM], c[MM];
-bool ab[MM][12], bb[MM][12];
-vector<int> choices[MM];
+int cnt[MM], fre[MM];
 void solve(){
-    memset(c, 0x3f, sizeof c);
-    cin >> n >> m;
-    FOR(i, 1, n)cin >> a[i];
-    FOR(i, 1, m) cin >> b[i];
-    ll ans=0;
-    bool pos = 1, pos2=0;
-    for(int i=1;i<=n;i++){
-        for(int j=1;j<=m;j++) choices[i].pb(b[j]);
+    memset(cnt, 0, sizeof cnt);
+    memset(fre, 0, sizeof fre);
+    int ans = INT_MAX;
+    int n; cin >> n;
+    for(int i=1, x;i<=n;i++){
+        cin >> x; cnt[x]++;
     }
+    for(int i=1;i<=n;i++){
+        if(cnt[i]>1)
+        fre[cnt[i]]++;
+    }
+    // for(int i=1;i<=n;i++)cout << fre[i] << " ";
+    // cout << "\n";
+    for(int i=2;i<=n;i++){
+        if(fre[i]){
+        // cout << i << " " << fre[i] << "\n";
 
-    for(int i=9;i>=0;i--){
-        pos = 1;
-        vector<int> v[MM];
-        for(int j=1;j<=n;j++){
-            // for(auto e:choices[j]) cout << e << " ";
-            // cout << "\n";
-                     
-            for(auto &e:choices[j]){
-                int tmp = a[j]&e;
-                if((tmp&(1<<i))==0){
-                     v[j].pb(e);
-                }
-                
-            }
-            if(v[j].empty()){
-                pos = 0; break;
-            }
-
+        ans = min(ans, fre[i]+(n-fre[i]*i)/(i-1)-1);
+        // cout << i << " " << ans << "\n";
         }
-        if(!pos){
-            ans += (1<<i);
-            // cout << i << "\n";
-
-        } 
-        else{
-            swap(v, choices);
-        }
-        // cout << "\n";
     }
     cout << ans << "\n";
 
-
 }
 int main(){
-    solve();
+    int t; cin >> t;
+    while(t--)solve();
     return 0;
 }

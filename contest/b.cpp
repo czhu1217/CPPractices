@@ -13,8 +13,7 @@
 #include <unordered_map>
 #include <string>
 #include <climits>
-#define f first
-#define s second
+#include <stack>
 using namespace std; 
 typedef long long ll;
 typedef long double ld;
@@ -42,57 +41,27 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const int MM = 1e5+5;
-int a[MM], cnt[MM], fre2, fre4, fre6, fre8;
-
+int r, g, b, w;
+int a, x, y, z;
 void solve(){
-    bool pos=0, s=0, r=0; int r1, r2, s1;
-    memset(cnt, 0, sizeof cnt);
-    int n; cin >> n;
-    for(int i=1;i<=n;i++)cin >> a[i];
-    for(int i=1;i<=n;i++)cnt[a[i]]++;
-    for(int i=1;i<MM;i++){
-        if(cnt[i]>=8)fre8++;
-       else if(cnt[i]>=6) fre6++;
-       else if(cnt[i]>=4)fre4++;
-       else if(cnt[i]>=2)fre2++;
+    cin >> r >> g >> b >> w;
+    a = r%2; x = g%2; y = b%2; z = w%2;
+    if(a+x+y+z<=1){
+        cout << "YES\n";
+        return;
     }
-    int q; cin >> q;
-
-    for(int i=1;i<=q;i++){
-
-        char c; int x;
-        cin >> c >> x;
-        if(cnt[x]>=8)fre8--;
-        else if(cnt[x]>=6) fre6--;
-        else if(cnt[x]>=4)fre4--;
-        else if(cnt[x]>=2)fre2--;
-        if(c=='+'){
-            cnt[x]++;
-
-        }
-        else{
-            cnt[x]--;
-        }
-        if(cnt[x]>=8)fre8++;
-        else if(cnt[x]>=6)fre6++;
-        else if(cnt[x]>=4)fre4++;
-        else if(cnt[x]>=2)fre2++;
-                // cout << fre2 << " " << fre4 << " " << fre6 << "\n";
-        if(fre8) cout << "YES\n";
-        else if(fre6>=2)cout << "YES\n";
-        else if((fre6&&fre4)||(fre6&&fre2)) cout << "YES\n";
-        else if(fre4>=2)cout << "YES\n";
-        else if(fre4&&fre2>=2) cout << "YES\n";
-        else cout << "NO\n";
-
-    
+    r--; g--; b--; w +=  3;
+    if(r<0||g<0||b<0||w<0){
+        cout << "NO\n";
+        return;
     }
-
-
+    a = r%2; x = g%2; y = b%2; z = w%2;
+    if(a+x+y+z<=1) cout << "YES\n";
+    else cout << "NO\n";
 
 }
 int main(){
-    solve();
+    int t; cin >> t;
+    while(t--)solve();
     return 0;
 }
