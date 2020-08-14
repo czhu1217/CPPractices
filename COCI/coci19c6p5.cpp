@@ -51,11 +51,11 @@ int main(){
         for(int j=1;j<=k;j++){
             string s; cin >> s;
             if(i==1) m[s]++;
-            else{ m[s] = (m[s]+m[s.substr(0, s.size()-1)])%mod;
-            m[s] =( m[s]+m[s.substr(1, s.size()-1)])%mod;
+            else{ m[s] = (m[s]+m[s.substr(0, s.size()-1)]);
+            m[s] =( m[s]+m[s.substr(1, s.size()-1)]);
             }
 
-            if(i==n) ans = (ans + m[s])%mod;
+            if(i==n) ans = (ans + m[s]);
 
         }
     }
