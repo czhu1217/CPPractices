@@ -1,1 +1,4 @@
-.vscode/*
+
+.vscode/ipch
+a.exe
+.history
