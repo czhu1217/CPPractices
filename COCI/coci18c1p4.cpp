@@ -69,6 +69,8 @@ int main(){
                int idx = st.top(); st.pop();
                int rit = j-idx, lft = idx - (st.empty()?0:st.top());
                ans += calc(h[idx])*(lft*calc(rit)+rit*calc(lft)-lft*rit);
+            //    cout << idx << " " << lft << " " << rit << " " << ans-prev << "\n";
+            //    prev = ans;
            }
            st.push(j);
         }

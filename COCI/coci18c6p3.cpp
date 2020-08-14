@@ -41,8 +41,31 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
+const int MM = 505;
 int n, m, k;
+int p[MM], b[MM], dp[MM][MM];
+int sum=0;
 int main(){
+    memset(dp, 0, sizeof dp);
+    cin >> n >> m >> k;
+    FOR(i, 1, n){
+        cin >> p[i];}
+    FOR(i, 0, m) cin >> b[i];
+    FOR(i, 1, n) sum += b[p[i]];
+    dp[0][0]=0;
+    for(int i=1;i<=n;i++){
+        for(int j=0;j<=k;j++){
+            for(int x=0; x<=j;x++){
+                if(p[i]+x>m)break;
+                dp[i][j] = max(dp[i][j], dp[i-1][j-x]+b[p[i]+x]-b[p[i]]);
+            }
+                // cout << dp[i][j] << " ";
+
+        }
+        // cout <<a "\n";
+    }
+    cout << sum+dp[n][k] << "\n";
+
 
     return 0;
 }
