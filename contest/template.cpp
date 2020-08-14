@@ -41,12 +41,8 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-void solve(){
 
-
-}
 int main(){
-    int t; cin >> t;
-    while(t--)solve();
+
     return 0;
 }

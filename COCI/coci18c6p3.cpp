@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <cstring>
 #include <iostream>
@@ -40,27 +41,8 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-int n, k;
-ll ans=0;
-const ll mod = 1e9+7;
-map<string, ll> m;
+int n, m, k;
 int main(){
-    cin >> n >> k;
-
-    for(int i=1;i<=n;i++){
-        for(int j=1;j<=k;j++){
-            string s; cin >> s;
-            if(i==1) m[s]++;
-            else{ m[s] = (m[s]+m[s.substr(0, s.size()-1)])%mod;
-            m[s] =( m[s]+m[s.substr(1, s.size()-1)])%mod;
-            }
-
-            if(i==n) ans = (ans + m[s])%mod;
-
-        }
-    }
-
-    cout << ans << "\n";
 
     return 0;
 }
