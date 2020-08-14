@@ -1,18 +1,4 @@
-#include <stdio.h>
-#include <cstring>
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <math.h>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <bitset>
-#include <queue>
-#include <unordered_map>
-#include <string>
-#include <climits>
-#include <stack>
+#include <bits/stdc++.h>
 using namespace std; 
 typedef long long ll;
 typedef long double ld;
@@ -41,7 +27,7 @@ typedef vector<pl> vpl;
 #define all(x) x.begin(), x.end()
 #define ins insert
 int n, k;
-ll ans=0;
+ll ans;
 const ll mod = 1e9+7;
 map<string, ll> m;
 int main(){
@@ -51,11 +37,15 @@ int main(){
         for(int j=1;j<=k;j++){
             string s; cin >> s;
             if(i==1) m[s]++;
-            else{ m[s] = (m[s]+m[s.substr(0, s.size()-1)]);
-            m[s] =( m[s]+m[s.substr(1, s.size()-1)]);
+            else{ 
+                m[s] = (m[s]+m[s.substr(0, s.size()-1)])%mod; if(i==n) ans = (ans+m[s.substr(0, s.size()-1)])%mod;
+                if(s.substr(0, s.size()-1)!=s.substr(1, s.size()-1)){
+                    m[s] =( m[s]+m[s.substr(1, s.size()-1)])%mod;
+                    if(i==n)
+                    ans = (ans+m[s.substr(1, s.size()-1)])%mod;
+                }
             }
 
-            if(i==n) ans = (ans + m[s]);
 
         }
     }
