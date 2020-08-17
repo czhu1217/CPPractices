@@ -1,4 +1,3 @@
-//dp and hashing
 #include <bits/stdc++.h>
 using namespace std; 
 typedef long long ll;
@@ -27,31 +26,36 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-int n, k;
-ll ans;
-const ll mod = 1e9+7;
-map<string, ll> m;
+const int MM = 2e5+5;
+int n, k, r, a[MM];
+int m[MM], req[MM];
+int cnt=0, ans=INT_MAX;
 int main(){
-    cin >> n >> k;
-
-    for(int i=1;i<=n;i++){
-        for(int j=1;j<=k;j++){
-            string s; cin >> s;
-            if(i==1) m[s]++;
-            else{ 
-                m[s] = (m[s]+m[s.substr(0, s.size()-1)])%mod; if(i==n) ans = (ans+m[s.substr(0, s.size()-1)])%mod;
-                if(s.substr(0, s.size()-1)!=s.substr(1, s.size()-1)){
-                    m[s] =( m[s]+m[s.substr(1, s.size()-1)])%mod;
-                    if(i==n)
-                    ans = (ans+m[s.substr(1, s.size()-1)])%mod;
-                }
-            }
-
-
-        }
+    cin >> n >> k >> r;
+    FOR(i, 1, n){
+        cin >> a[i];
     }
+    int l=1;
+    FOR(i, 1, r){
+        int x, y; cin >> x >> y;
+        req[x]=y;
+    }
+    cnt=r;
+    for(int r=1;r<=n;r++){
+        m[a[r]]++;
+        if(m[a[r]]==req[a[r]]) cnt--;
+        while(cnt==0){
+            if(m[a[l]]>req[a[l]]){
+                m[a[l]]--;
+                l++;
+            }
+            else break;
+        }
+        if(cnt==0) ans = min(ans,  r-l+1);
 
+    }
+    if(ans!=INT_MAX)
     cout << ans << "\n";
-
+    else cout << "impossible" << "\n";
     return 0;
 }

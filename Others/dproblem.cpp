@@ -1,7 +1,9 @@
-//dp and hashing
+//random number generator, hashing
+//nested frequency array
 #include <bits/stdc++.h>
 using namespace std; 
 typedef long long ll;
+
 typedef long double ld;
 typedef pair<int, int> pi;
 typedef pair<ll,ll> pl;
@@ -19,7 +21,7 @@ typedef vector<pl> vpl;
 #define F0Rd(i,a) for (int i = (a)-1; i >= 0; i--)
  
 #define sz(x) (int)(x).size()
-#define mp make_pair
+
 #define pb push_back
 #define f first
 #define s second
@@ -27,31 +29,25 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-int n, k;
-ll ans;
-const ll mod = 1e9+7;
-map<string, ll> m;
+const int MM = 1e5+2;
+unsigned seedl = chrono::system_clock::now().time_since_epoch().count();
+mt19937_64 gen(seedl); uniform_int_distribution<ll> dis(1, 1e12);
+int n, m; ll weight[MM], sum, ans, tmp; map<ll, int> mp;
 int main(){
-    cin >> n >> k;
-
-    for(int i=1;i<=n;i++){
-        for(int j=1;j<=k;j++){
-            string s; cin >> s;
-            if(i==1) m[s]++;
-            else{ 
-                m[s] = (m[s]+m[s.substr(0, s.size()-1)])%mod; if(i==n) ans = (ans+m[s.substr(0, s.size()-1)])%mod;
-                if(s.substr(0, s.size()-1)!=s.substr(1, s.size()-1)){
-                    m[s] =( m[s]+m[s.substr(1, s.size()-1)])%mod;
-                    if(i==n)
-                    ans = (ans+m[s.substr(1, s.size()-1)])%mod;
-                }
-            }
-
-
-        }
+    cin >> n >> m;
+    FOR(i, 1, m){
+        weight[i] = dis(gen);
+        sum += weight[i];
     }
+    mp[0] = 1;
+    FOR(i, 1, n){
+        int x; cin >> x;
+        tmp += weight[x];
+        tmp %= sum;
+        ans += mp[tmp]; mp[tmp]++;
 
-    cout << ans << "\n";
+    }
+    cout << ans << '\n';
 
     return 0;
 }
