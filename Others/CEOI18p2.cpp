@@ -1,53 +1,37 @@
-//global warming
-//longest increasing subsequence and logest descreasing subsequence
-//lis and lds
-#include <stdio.h>
-#include <cstring>
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <math.h>
-#include <map>
-#include <set>
-#include <unordered_set>
-#include <bitset>
-#include <queue>
-#include <unordered_map>
-#include <string>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
-int N, x; 
-const int MM = 2e5+2;
-int a[MM], bit[MM], lisLen[MM], ldsLen[MM];
-vector<int> lis, lds;
-int ans = INT_MAX;
-int main(){
-    cin >> N >> x;
-    for(int i=1;i<=N;i++){
-        scanf("%d", &a[i]);
-        if(lis.empty()||a[i]>lis.back()){ lis.push_back(a[i]); lisLen[i] = lis.size();}
-        else{
-            lisLen[i] = lower_bound(lis.begin(), lis.end(), a[i])-lis.begin()+1;
-            *(lower_bound(lis.begin(), lis.end(), a[i])) = a[i];
+const ll MM = 2e5+5;
+ll n, x, a[MM], len1[MM], len2[MM], ans = 0, j;
+int lis[MM], lds[MM];
+int len = 0;
+
+int main()
+{
+	cin >> n >> x;
+    for(ll i=1;i<=n;i++){
+        cin >> a[i];
+        if(len==0||a[i]>lis[len]){
+            lis[++len] = a[i]; len1[i] = len; continue;
         }
+        if(a[i]+x>lis[len]) len1[i] = len+1;
+        else len1[i] = lower_bound(lis+1, lis+len+1, a[i]+x)-lis;
+        *lower_bound(lis+1, lis+len+1, a[i]) = a[i];
 
     }
-    for(int i=N;i>0;i--){
-        if(lds.empty()||a[i]<lds.back()){ lds.push_back(a[i]); ldsLen[i] = lds.size();}
-        else{
-            ldsLen[i] = lower_bound(lds.begin(), lds.end(), a[i])-lds.begin();
-            *(lower_bound(lds.begin(), lds.end(), a[i])) = a[i];
+    len = 0;
+    for(ll i=n;i>0;i--){
+        if(len==0||a[i]<lds[len]){
+            lds[++len] = a[i]; len2[i] = len; continue;
         }
+        j = lower_bound(lds+1, lds+1+len, a[i], greater<int>())-lds;
+        len2[i] = j; lds[j] = a[i];
+
     }
-    for(int i=1;i<=N;i++){
-        ans = max(ldsLen[i]+query(a[i]+x));
+    for(ll i=1;i<=n;i++){
+        ans = max(ans, len1[i]+len2[i]-1);
     }
     cout << ans << "\n";
-
-
-
-
-
+    return 0;
+   
 }
-
-
