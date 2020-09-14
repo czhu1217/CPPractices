@@ -31,7 +31,7 @@ pi a[MM]; bool vis[MM];
 struct e{
     ll q, t, d, a;
 } ok[MM];
-ll dp[MM], dp1[MM];ll sum;ll ans=0;
+ll dp[MM];ll sum;ll ans=0;
 int main(){
     memset(dp, -0x3f, sizeof dp);
     cin >> n >> m >> k;
@@ -43,27 +43,23 @@ int main(){
     }
     dp[0] =0;
     for(ll i=1;i<=n;i++){
-            for(int j=a[i].s;)
+            for(ll j=a[i].f; j<=k;j++){
+                dp[j] = max(dp[j], dp[j-a[i].f]+a[i].s);
+                ans = max(dp[j], ans);
+            }
     }
-    cout << ans << "\n";
-    int cnt[MM];
     for(ll i=1;i<=m;i++){
-        memset(cnt, 0, sizeof cnt);
         ll v = a[ok[i].t].s*(ok[i].q);
-        for(int j=ok[i].d;j<=k;j++){
-            if(cnt[j-ok[i].d]>=ok[i].a)continue;
-            if(dp[j-ok[i].d]+v==dp[j]){
-                cnt[j] = min(cnt[j], cnt[j-ok[i].d]+1);
+        for(ll x = 0;x<ok[i].a;x++){
+            bool imp = 0;
+            for(ll j=k;j>=ok[i].d;j--){
+                ll ori = dp[j];
+                dp[j] = max(dp[j], dp[j-ok[i].d]+v);
+                ans = max(dp[j], ans);
+                if(dp[j]!=ori) imp=1;
             }
-            if(dp[j-ok[i].d]+v>dp[j]){
-                dp[j] = dp[j-ok[i].d]+v;
-                cnt[j] = cnt[j-ok[i].d]+1;
-            }
-
+            if(!imp) break;
         }
-    }
-    for(int i=0;i<=k;i++){
-        ans = max(ans, dp[i]);
     }
     cout << ans << "\n";
     return 0;
