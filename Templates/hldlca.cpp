@@ -47,6 +47,6 @@ int main(){
     cin >> q; int u, v;
     while(q--){
         cin >> u >> v; u++;v++;
-        cout << dis[u]+dis[c]-2*dis[lca]
+        cout << dis[u]+dis[v]-2*dis[lca(u, v)];
     }
 }
