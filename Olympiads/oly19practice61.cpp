@@ -26,16 +26,17 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const int MM = 1e5+5;
-int n; 
-vector<int> adj[MM];
+int l[22], r[22];
 int main(){
-    cin >> n; int x;
-    FOR(i, 1, n){
-        cin >> x;
-        adj[x].pb(i);
+    int n; cin >> n;
+    FOR(i, 1, n) cin >> l[i];
+    FOR(i, 1, n) cin >> r[i];
+    for(int i=0;i<(1<<n);i++){
+        
     }
-    
 
+
+
+    
     return 0;
 }

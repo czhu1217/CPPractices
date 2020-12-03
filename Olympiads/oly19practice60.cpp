@@ -26,16 +26,14 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const int MM = 1e5+5;
-int n; 
-vector<int> adj[MM];
+const int MM = 1e6+4;
+int n, a[MM]; ll ans=0;
 int main(){
-    cin >> n; int x;
-    FOR(i, 1, n){
-        cin >> x;
-        adj[x].pb(i);
+    cin >> n;
+    FOR(i, 1, n) cin >> a[i];
+    FOR(i, 2, n){
+        ans += max(a[i], a[i-1]);
     }
-    
-
+    cout << ans << "\n";
     return 0;
 }

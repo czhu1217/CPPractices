@@ -26,16 +26,30 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const int MM = 1e5+5;
-int n; 
-vector<int> adj[MM];
+int n; const int MM = 2e6+2;
+int a[MM], ans[MM];
+int s=0;
 int main(){
-    cin >> n; int x;
+    cin >> n;int x;
     FOR(i, 1, n){
-        cin >> x;
-        adj[x].pb(i);
+        cin >> a[i];
+        if(!s){
+            s++; ans[s] = a[i]; continue;
+        }
+        if(a[i]==ans[s])continue;
+        if(s==1){
+            s++;
+            ans[s] = a[i]; continue;
+        }
+        if((a[i]-ans[s])*(ans[s]-ans[s-1])<0){
+            s++;
+            ans[s] = a[i];
+            continue;
+        }
+        ans[s] = a[i];
     }
-    
+    cout << s << "\n";
+   
 
     return 0;
 }

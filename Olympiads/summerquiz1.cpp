@@ -26,16 +26,15 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const int MM = 1e5+5;
-int n; 
-vector<int> adj[MM];
+int q, l , r, cnt;
 int main(){
-    cin >> n; int x;
-    FOR(i, 1, n){
-        cin >> x;
-        adj[x].pb(i);
+    cin >> q >> l >> r;
+    for(int i=1, qi, xi; i<=q;i++){
+        cin >> qi >> xi;
+        while(!(qi>=l&&qi<=min(qi+xi, r))){
+            
+        }
+        cout << cnt << "\n";
     }
-    
-
     return 0;
 }

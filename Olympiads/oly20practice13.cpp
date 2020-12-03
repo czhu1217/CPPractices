@@ -1,3 +1,5 @@
+//slope trick
+
 #include <bits/stdc++.h>
 using namespace std; 
 typedef long long ll;
@@ -26,16 +28,20 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const int MM = 1e5+5;
-int n; 
-vector<int> adj[MM];
+int n, a; priority_queue<int> q; ll ans;
 int main(){
-    cin >> n; int x;
-    FOR(i, 1, n){
-        cin >> x;
-        adj[x].pb(i);
+    cin >> n >> a;
+    q.push(a);
+    for(int i=1;i<n;i++){
+        cin >> a;
+        a -= i;
+        q.push(a);
+        if(q.top()>a){
+            ans += q.top()-a;
+            q.pop();
+            q.push(a);
+        }
     }
-    
-
-    return 0;
+    cout << ans << "\n";
+    return 0;   
 }

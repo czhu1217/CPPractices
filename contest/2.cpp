@@ -26,30 +26,39 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-int n; const int MM = 2e6+2;
-int a[MM], ans[MM];
-int s=0;
-int main(){
-    cin >> n;int x;
-    FOR(i, 1, n){
-        cin >> a[i];
-        if(!s){
-            s++; ans[s] = a[i]; continue;
-        }
-        if(a[i]==ans[s])continue;
-        if(s==1){
-            s++;
-            ans[s] = a[i]; continue;
-        }
-        if((a[i]-ans[s])*(ans[s]-ans[s-1])<0){
-            s++;
-            ans[s] = a[i];
-            continue;
-        }
-        ans[s] = a[i];
+ll n;
+ll tot[22], sum[22], ans;
+int dig(ll n){
+    int cnt = 0;
+    while(n){
+        cnt++;
+        n = n/10;
     }
-    cout << s << "\n";
-   
+    return cnt;
+}
+ll quick_pow(ll x, int exp){
+    if(exp==0)return 1;
+    ll t = quick_pow(x, exp/2);
+    t = t*t;
+    return (exp&1)?t*x:t;
+}
+int main(){
+    for(int i=1;i<=21;i++){
+        tot[i] = quick_pow(10, i) - quick_pow(10, i-1);
+    }
+    sum[1] = tot[1];
+    for(int i=3; i<=21;i+=2){
+        sum[i] = tot[i] + sum[i-2];
+    }
+    cin >> n;
+    int a = dig(n);
+    if(a%2==0) cout << sum[a-1] << "\n";
+    else{
+        if(a-2) ans += sum[a-2];
+        ans += n-quick_pow(10, a-1)+1;
+        cout << ans << "\n";
+    }
 
+  
     return 0;
 }

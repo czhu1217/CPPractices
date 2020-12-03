@@ -1,3 +1,5 @@
+//AC
+//binary search
 #include <bits/stdc++.h>
 using namespace std; 
 typedef long long ll;
@@ -26,22 +28,41 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-ll n;ll ans;
-int dig(int n){
-    int cnt = 0;
-    while(n){
+int n, m , c;
+const int MM = 1e5+5;int cnt;
+int a[MM];
+bool test(int k){
+    int sum = 0; int rem = m;
+    for(int i=1;i<=n;i++){
         cnt++;
-        n = n/10;
+        if(i!=n&&sum + a[i+1]-a[i]<=k&&cnt<c) {
+            sum += a[i+1]-a[i];
+            continue;
+        }
+        else{
+            rem--;
+            sum = 0;
+            cnt = 0;
+        }
+        if(rem<0) return false;
     }
-    return cnt;
+    return true;
 }
 int main(){
-    cin >> n;
-    for(int i=1;i<=n;i++){
-        if(dig(i)%2) ans++;
+    ifstream cin("convention.in");
+    ofstream cout("convention.out");
+    cin >> n >> m >> c;
+    FOR(i, 1, n) cin >> a[i];
+    sort(a+1, a+1+n);
+    int lo = 0, hi = 1e9;
+    while(lo!=hi){
+        int mid = (lo+hi)/2;
+        if(test(mid)) hi = mid;
+        else lo = mid+1;
+
     }
-    cout << ans;
-    
+    cout << lo << "\n";
+
 
     return 0;
 }
