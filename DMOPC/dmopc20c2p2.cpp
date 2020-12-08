@@ -26,22 +26,32 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-ll n;ll ans;
-int dig(int n){
-    int cnt = 0;
-    while(n){
-        cnt++;
-        n = n/10;
-    }
-    return cnt;
-}
+const int MM = 1e5+5, MM2 = 1e6+4;
+int n, m, first[MM2], last[MM2], a[MM], ai[MM], bi[MM]; int ans = 0;
 int main(){
-    cin >> n;
-    for(int i=1;i<=n;i++){
-        if(dig(i)%2) ans++;
+    for(int i=1;i<=MM2;i++){
+        first[i] = 1e7; last[i] = -1e7;
     }
-    cout << ans;
-    
+    cin >> n >> m;
+    FOR(i, 1, n){
+        cin >> a[i];
+    }
+    for(int i=1, a, b; i<=m;i++){
+        cin >> ai[i] >> bi[i];
+    }
+    FOR(i, 1, n){
+        first[a[i]] = min(first[a[i]], i);
+        last[a[i]] = max(last[a[i]], i);
+    }
+    int len=0;
+    FOR(i, 1, m){
+        if(last[bi[i]]!=-1e7&&first[ai[i]]!=1e7){
+        len = last[bi[i]] - first[ai[i]]+1;
+        ans = max(ans, len);
+        }
+    }
+    cout << ans << "\n";
+
 
     return 0;
 }

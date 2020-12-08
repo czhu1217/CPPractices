@@ -26,39 +26,27 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-ll n;
-ll tot[22], sum[22], ans;
-int dig(ll n){
-    int cnt = 0;
-    while(n){
-        cnt++;
-        n = n/10;
-    }
-    return cnt;
-}
-ll quick_pow(ll x, int exp){
-    if(exp==0)return 1;
-    ll t = quick_pow(x, exp/2);
-    t = t*t;
-    return (exp&1)?t*x:t;
-}
-int main(){
-    for(int i=1;i<=21;i++){
-        tot[i] = quick_pow(10, i) - quick_pow(10, i-1);
-    }
-    sum[1] = tot[1];
-    for(int i=3; i<=21;i+=2){
-        sum[i] = tot[i] + sum[i-2];
-    }
-    cin >> n;
-    int a = dig(n);
-    if(a%2==0) cout << sum[a-1] << "\n";
-    else{
-        if(a-2) ans += sum[a-2];
-        ans += n-quick_pow(10, a-1)+1;
-        cout << ans << "\n";
-    }
+const int MM = 1e5+5;
+int n, a[MM], m[MM], freq[MM]; int len, ans, mx;
 
-  
+int main(){
+    cin >> n;
+    FOR(i, 1, n) cin >> a[i];
+    for(int i=1;i<=n;i++){
+        // memset(freq, 0, sizeof freq);
+        memset(m, 0, sizeof m);
+        mx = 0;
+        for(int j=i;j<=n;j++){
+            len = j-i+1;
+            // freq[m[a[j]]]--;
+            m[a[j]]++;
+            // freq[m[a[j]]]++;
+            mx = max(mx, m[a[j]]);
+            if(mx>len/2){ ans++; }
+            // cout << i << " " << j << " " << mx << "\n";
+            
+        }
+    }
+    cout << ans << "\n";
     return 0;
 }
