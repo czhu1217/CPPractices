@@ -26,27 +26,30 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const int MM = 1e5+5;
-int n, a[MM], m[MM], freq[MM]; int len, ans, mx;
-
+int n; const int MM = 1e4+4;
+long double dp[MM], a[MM];
 int main(){
     cin >> n;
-    FOR(i, 1, n) cin >> a[i];
+    FOR(i, 1, n) dp[i] = DBL_MAX;
+    FOR(i, 1, n){
+        cin >> a[i];
+    }
+    dp[0] = 0;
+    double  b[4], x, y;
     for(int i=1;i<=n;i++){
-        // memset(freq, 0, sizeof freq);
-        memset(m, 0, sizeof m);
-        mx = 0;
-        for(int j=i;j<=n;j++){
-            len = j-i+1;
-            // freq[m[a[j]]]--;
-            m[a[j]]++;
-            // freq[m[a[j]]]++;
-            mx = max(mx, m[a[j]]);
-            if(mx>len/2){ ans++; }
-            // cout << i << " " << j << " " << mx << "\n";
-            
+        dp[i] = dp[i-1]+a[i];
+        if(i>1){
+            x = a[i-1], y = a[i];
+            if(x>y)swap(x, y);
+            dp[i] = min(dp[i], dp[i-2]+y+x/2);
+        }
+        if(i>2){
+            b[1] = a[i-2], b[2] = a[i-1], b[3] = a[i];
+            sort(b+1, b+4);
+            dp[i] = min(dp[i], dp[i-3]+b[2]+b[3]);
         }
     }
-    cout << ans << "\n";
+printf("%.1Lf\n", dp[n]);
+
     return 0;
 }
