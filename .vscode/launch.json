@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch cccs2",
+            "request": "launch",
+            "mainClass": "CCC.cccs2",
+            "projectName": "CPPractices_5022cb07"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - jamp4",
             "request": "launch",
             "mainClass": "jamp4",
