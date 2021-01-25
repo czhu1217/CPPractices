@@ -45,8 +45,8 @@ int main(){
     }
     for(int i=1;i<=h.size();i++){
         hay[i] = h[i-1];
-        hsh[i] = ((hsh[i-1]*base + hay[i]-'a'+1)%mod+mod)%mod;
-        hsh2[i] = ((hsh2[i-1]*base2 + hay[i] - 'a' + 1)%mod+mod)%mod;
+        hsh[i] = (hsh[i-1]*base + hay[i]-'a'+1)%mod;
+        hsh2[i] = (hsh2[i-1]*base2 + hay[i] - 'a' + 1)%mod;
         if(i<n.size()){
             pro[hay[i]-'a']++;
         }

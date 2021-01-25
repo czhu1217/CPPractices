@@ -28,13 +28,40 @@ typedef vector<pl> vpl;
 #define ins insert
 const int MM = 3e6+5;
 ll n, a[MM], k, ans; 
+deque<pi> mi, mx;
 int main(){
+    cin.tie(0); cin.sync_with_stdio(0);
     cin >> n >> k;
     FOR(i, 1, n){
         cin >> a[i];
     } 
-    FOR(i, 1, n){
-        
+    int l=1, r=1; 
+    mi.push_back({a[1], 1}); mx.push_back({a[1], 1});
+    while(r<=n){
+        if(mx.front().f-mi.front().f<=k){
+            ans += r-l+1;
+            r++;
+            while((!mx.empty())&&mx.back().f<a[r]) mx.pop_back();
+            mx.pb({a[r], r});
+            while((!mi.empty())&&mi.back().f>a[r]) mi.pop_back();
+            mi.pb({a[r], r});
+        }
+        else{
+            while((!mx.empty())&&(!mi.empty())&&mx.front().f-mi.front().f>k){
+                if(mx.front().s<mi.front().s){
+                    l = mx.front().s+1;
+                    mx.pop_front();
+                }
+                else if(mx.front().s>mi.front().s){
+                    l = mi.front().s+1;
+                    mi.pop_front();
+                }
+                else{
+                    l = mi.front().s+1;
+                    mi.pop_front(); mx.pop_front();
+                }
+            }            
+        }
     }
 
     cout << ans << "\n";

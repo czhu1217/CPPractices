@@ -26,26 +26,20 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-ll n, k, dp[255][255][255];
+const ll MM = 1e5+5;
+ll n, k, a[MM], dp[MM];
 int main(){
-    cin.tie(0);cin.sync_with_stdio(0);
+    memset(dp, 0x3f, sizeof dp);
     cin >> n >> k;
-    FOR(i, 1, n) dp[1][i][i]++;
-    FOR(i, 1, k){
-        FOR(j, 1, n){
-            FOR(m, 1, n){
-                if(dp[i][j][m]){
-                    FOR(q, m, n-j){
-                        dp[i+1][j+q][q]+=dp[i][j][m];
-                    }
-                }
+    FOR(i, 1, n) cin >> a[i];
+    dp[0] = INT_MAX; dp[1] = 0;
+    for(ll i=2;i<=n;i++){
+        for(int j=1;j<=k;j++){
+            if(i-j>=0){
+                dp[i] = min(dp[i], dp[i-j]+abs(a[i-j]-a[i]));
             }
         }
-    } 
-    ll ans=0;
-    FOR(i, 1, n)
-        ans += dp[k][n][i];
-    cout << ans << "\n";
-
+    }
+    cout << dp[n] << "\n";
     return 0;
 }

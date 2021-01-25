@@ -1,10 +1,4 @@
-#include <iostream>
-#include <stdio.h>
-#include <cstring>
-#include <algorithm>
-#include <vector>
-#include <math.h>
-#include <map>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 int N;
@@ -23,7 +17,7 @@ int main(){
         temp = (double)abs(v[i].second-v[i-1].second)/(double)(v[i].first-v[i-1].first);
         if(temp>mx) mx = temp;
     }
-    cout << mx << endl;
+    printf("%.6f\n", mx);
     return 0;
 
 }

@@ -1,71 +1,77 @@
-#include <stdio.h>
-#include <vector>
-#include <algorithm>
-#include <numeric>
-
-using namespace std;
-
-vector<vector<int>> par(2, vector<int>(100005)), rnk(2, vector<int>(100005));
-
-int find(int i, int n)
-{
-    if (par[i][n] ^ n)
-        return par[i][n] = find(i, par[i][n]);
-    return n;
+#include <bits/stdc++.h>
+using namespace std; 
+typedef long long ll;
+typedef long double ld;
+typedef pair<ll, ll> pi;
+typedef pair<ll,ll> pl;
+typedef pair<ld,ld> pd;
+ 
+typedef vector<ll> vi;
+typedef vector<ld> vd;
+typedef vector<ll> vl;
+typedef vector<pi> vpi;
+typedef vector<pl> vpl;
+ 
+#define FOR(i, a, b) for (ll i=a; i<=(b); i++)
+#define F0R(i, a) for (ll i=0; i<(a); i++)
+#define FORd(i,a,b) for (ll i = (b)-1; i >= a; i--)
+#define F0Rd(i,a) for (ll i = (a)-1; i >= 0; i--)
+ 
+#define sz(x) (ll)(x).size()
+#define mp make_pair
+#define pb push_back
+#define f first
+#define s second
+#define lb lower_bound
+#define ub upper_bound
+#define all(x) x.begin(), x.end()
+#define ins insert
+const ll MM = 1e5+5;
+ll n, m, p, q, x, y, z, cnt[2], rt[2][MM], mx, mi, dep[2][MM];
+struct ed{
+    ll a, b, c, i;
+    bool operator<(ed &e){
+        return c<e.c;
+    }
+}; vector<ed> v;
+ll find(ll x, ll i){
+    while(rt[i][x]!=x) x = rt[i][x];
+    return x;
 }
-
-bool merge(int i, int a, int b)
+bool merge( ll a, ll b, ll i)
 {
-    a = find(i, a), b = find(i, b);
-    if (a == b) return false;
-    if (rnk[i][a] > rnk[i][b])
-        par[i][b] = a;
+    a = find(a, i), b = find(b, i);
+    if (a == b) return 0;
+    if (dep[i][a] > dep[i][b])
+        rt[i][b] = a;
     else
-        par[i][a] = b;
-    if (rnk[i][a] == rnk[i][b])
-        rnk[i][b]++;
-    return true;
+        rt[i][a] = b;
+    if (dep[i][a] == dep[i][b])
+        dep[i][b]++;
+    return 1;
 }
-
-struct ed
-{
-    int a, b, c, i;
-    friend bool operator<(ed &a, ed &b)
-    {
-        return a.c < b.c;
+int main(){
+    cin >> n >> m >> p >> q;
+    FOR(i, 1, m) rt[0][i] = i;
+    FOR(i, 1, n) rt[1][i] = i;
+    while(p--){
+        cin >> x >> y >> z;
+        v.pb({x, y, z, 0});
+        mx += z*n;
     }
-};
-
-vector<ed> aa;
-
-int main()
-{
-    iota(par[0].begin(), par[0].end(), 0);
-    iota(par[1].begin(), par[1].end(), 0);
-    int n, m, p, q, a, b, c;
-    long long s = 0, ms = 0;
-    scanf("%i%i%i%i", &n, &m, &p, &q);
-    while (p--)
-    {
-        scanf("%i%i%i", &a, &b, &c);
-        aa.push_back({a,b,c,0});
-        s += c*(long long)n;
+    while(q--){
+        cin >> x >> y >> z;
+        v.pb({x, y, z, 1});
+        mx += z*m;
     }
-    while (q--)
-    {
-        scanf("%i%i%i", &a, &b, &c);
-        aa.push_back({a,b,c,1});
-        s += c*(long long)m;
-    }
-    sort(aa.begin(), aa.end());
-    vector<int> cnt(2);
-    for (auto &x : aa)
-    {
-        if (merge(x.i, x.a, x.b))
-        {
-            cnt[x.i]++;
-            ms += ((x.i ? m : n) - cnt[!x.i])*(long long)x.c;
+    sort(v.begin(), v.end());
+    for(auto &e:v){
+        if(merge(e.a, e.b, e.i)){
+            cnt[e.i]++;
+            mi += ((e.i?m:n)-cnt[!e.i])*e.c;
         }
     }
-    printf("%lli", s - ms);
+    cout << mx -mi << "\n";
+
+    return 0;
 }
