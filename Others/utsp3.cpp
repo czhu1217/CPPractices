@@ -26,27 +26,22 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const int MM = 405;
-int n, l, r;
-ll dp[MM][MM], sz[MM][MM];
+const int MM = 1e5+5,mod = 1e9+7;
+ll n, a[MM], dp[MM], mx, sum;
 int main(){
-    memset(dp, 0x3f, sizeof dp);
+    dp[0] = 0;
     cin >> n;
     FOR(i, 1, n){
-        cin >> sz[i][i];
-        dp[i][i] = 0;
+        cin >> a[i];
+        if(a[i]<mx){
+            dp[i] = dp[i-1];
+        }
+        else{
+            mx = a[i];
+            dp[i] = (sum+1)%mod;
+        }
+        sum = (sum+dp[i])%mod;
     }
-    FOR(i, 2, n){
-        FOR(j, 1, n-i+1){
-            l = j; r = j+i-1;
-            FOR(k, l, r-1){
-                dp[l][r] = min(dp[l][r], dp[l][k]+dp[k+1][r]+sz[l][k]+sz[k+1][r]);
-                sz[l][r] = sz[l][r-1]+sz[r][r];
-            }
-            //  cout << l << " " << r << " " << dp[l][r] << "\n";
-        }  
-    }
-    cout << dp[1][n] << "\n";
+    cout << dp[n] << "\n";
     return 0;
-
 }

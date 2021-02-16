@@ -26,27 +26,30 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const int MM = 405;
-int n, l, r;
-ll dp[MM][MM], sz[MM][MM];
+const int MM = 1e5+5;
+int n, m, x, y, ind[MM], dis[MM];
+vector<int> adj[MM];
+void dfs(int u){
+    if(adj[u].empty()||dis[u]) return;
+    // cout << u << "\n";
+    for(auto e:adj[u]){
+            dfs(e);
+            dis[u] = max(dis[u], dis[e]+1);
+    }
+}
 int main(){
-    memset(dp, 0x3f, sizeof dp);
-    cin >> n;
+    // cin.tie(0); cin.sync_with_stdio(0);
+    cin >> n >> m;
+    FOR(i, 1, m){
+        cin >> x >> y;
+        adj[x].pb(y);
+        ind[y]++;
+    }
     FOR(i, 1, n){
-        cin >> sz[i][i];
-        dp[i][i] = 0;
+        dfs(i);
     }
-    FOR(i, 2, n){
-        FOR(j, 1, n-i+1){
-            l = j; r = j+i-1;
-            FOR(k, l, r-1){
-                dp[l][r] = min(dp[l][r], dp[l][k]+dp[k+1][r]+sz[l][k]+sz[k+1][r]);
-                sz[l][r] = sz[l][r-1]+sz[r][r];
-            }
-            //  cout << l << " " << r << " " << dp[l][r] << "\n";
-        }  
-    }
-    cout << dp[1][n] << "\n";
+    int ans=0;
+    FOR(i, 1, n) ans = max(ans, dis[i]);
+    cout << ans << "\n";
     return 0;
-
 }

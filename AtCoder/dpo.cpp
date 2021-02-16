@@ -26,27 +26,28 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const int MM = 405;
-int n, l, r;
-ll dp[MM][MM], sz[MM][MM];
+const int MM = 22, lim = 2100000, mod = 1e9+7;
+int n; bool a[MM][MM]; int dp[MM][lim]; ll cnt;
 int main(){
-    memset(dp, 0x3f, sizeof dp);
+    cin.tie(0); cin.sync_with_stdio(0);
     cin >> n;
-    FOR(i, 1, n){
-        cin >> sz[i][i];
-        dp[i][i] = 0;
-    }
-    FOR(i, 2, n){
-        FOR(j, 1, n-i+1){
-            l = j; r = j+i-1;
-            FOR(k, l, r-1){
-                dp[l][r] = min(dp[l][r], dp[l][k]+dp[k+1][r]+sz[l][k]+sz[k+1][r]);
-                sz[l][r] = sz[l][r-1]+sz[r][r];
+    dp[0][0] = 1; a[0][0] = 1;
+    FOR(i, 1, n)
+        FOR(j, 1, n)
+            cin >> a[i][j];
+            
+    for(int i=1;i<=n;i++){
+        for(int msk = 0; msk<(1<<n);msk++){
+            if(__builtin_popcount(msk)!=i) continue;
+            for(int j=0;j<n;j++){
+                if((msk&(1<<j))&&a[i][j+1]){
+                    dp[i][msk] += dp[i-1][msk^(1<<j)];
+                    dp[i][msk] %= mod;
+                }
             }
-            //  cout << l << " " << r << " " << dp[l][r] << "\n";
-        }  
+        }
     }
-    cout << dp[1][n] << "\n";
+    
+    cout << dp[n][(1<<n)-1] << "\n";
     return 0;
-
 }

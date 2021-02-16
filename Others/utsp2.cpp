@@ -26,27 +26,45 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const int MM = 405;
-int n, l, r;
-ll dp[MM][MM], sz[MM][MM];
-int main(){
-    memset(dp, 0x3f, sizeof dp);
-    cin >> n;
-    FOR(i, 1, n){
-        cin >> sz[i][i];
-        dp[i][i] = 0;
-    }
-    FOR(i, 2, n){
-        FOR(j, 1, n-i+1){
-            l = j; r = j+i-1;
-            FOR(k, l, r-1){
-                dp[l][r] = min(dp[l][r], dp[l][k]+dp[k+1][r]+sz[l][k]+sz[k+1][r]);
-                sz[l][r] = sz[l][r-1]+sz[r][r];
-            }
-            //  cout << l << " " << r << " " << dp[l][r] << "\n";
-        }  
-    }
-    cout << dp[1][n] << "\n";
-    return 0;
+const int MM = 1000;
+int k, a[105], n, cnt=0;
+bool p[1000]; 
+vector<int> v;
+void sieve(){
+    memset(p, 1, sizeof p);
+    p[0]=p[1]=0; 
+    for(int i=2;i<MM;i++){
+        if(v.size()>100) break;
+        if(p[i]){
+            v.push_back(i);
 
+        }
+        for(int e:v){
+            if(i*e>=MM)break; //out of the range
+            p[i*e]=0; // i*e is not a prime number
+
+        }
+    }
+}
+int main(){
+    sieve();
+    cin >> k;
+    int n;
+    for(int i=1;i<=100;i++){
+        if(i*(i+1)>=2*k){
+            n=i;break;
+        }
+    }
+    int t = n*(n+1)/2;
+    t = t-k;
+    FOR(i, 1, t){
+        a[i] = v[i-1];
+    }
+    FOR(i, t+1, n) a[i] = 1;
+    cout << n << "\n";
+    FOR(i, 1,n) cout << a[i] << " ";
+    cout << "\n";
+
+
+    return 0;
 }

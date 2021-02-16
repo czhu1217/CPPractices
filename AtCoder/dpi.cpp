@@ -26,27 +26,26 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const int MM = 405;
-int n, l, r;
-ll dp[MM][MM], sz[MM][MM];
-int main(){
-    memset(dp, 0x3f, sizeof dp);
-    cin >> n;
-    FOR(i, 1, n){
-        cin >> sz[i][i];
-        dp[i][i] = 0;
-    }
-    FOR(i, 2, n){
-        FOR(j, 1, n-i+1){
-            l = j; r = j+i-1;
-            FOR(k, l, r-1){
-                dp[l][r] = min(dp[l][r], dp[l][k]+dp[k+1][r]+sz[l][k]+sz[k+1][r]);
-                sz[l][r] = sz[l][r-1]+sz[r][r];
-            }
-            //  cout << l << " " << r << " " << dp[l][r] << "\n";
-        }  
-    }
-    cout << dp[1][n] << "\n";
-    return 0;
+const int MM = 3000;
+int n;
+double a[MM], dp[MM][MM];
 
+int main(){
+    cin >> n;
+    FOR(i, 1, n) cin >> a[i];
+    dp[1][1] = a[1]; dp[1][0] = 1-a[1];
+    FOR(i, 2, n){
+        FOR(j, 0, i){
+            dp[i][j] += (1-a[i])*dp[i-1][j];
+            if(j)
+            dp[i][j] += a[i]*dp[i-1][j-1];
+        }
+    }
+    double ans = 0;
+    FOR(i, ceil(n*1.0/2.0), n){
+        // cout << dp[n][i] << " ";
+        ans += dp[n][i];
+    }
+    printf("%.10f\n", ans);
+    return 0;   
 }

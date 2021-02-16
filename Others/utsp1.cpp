@@ -21,32 +21,19 @@ typedef vector<pl> vpl;
 #define mp make_pair
 #define pb push_back
 #define f first
-#define s second
 #define lb lower_bound
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const int MM = 405;
-int n, l, r;
-ll dp[MM][MM], sz[MM][MM];
+int n; ll ans;
 int main(){
-    memset(dp, 0x3f, sizeof dp);
     cin >> n;
     FOR(i, 1, n){
-        cin >> sz[i][i];
-        dp[i][i] = 0;
+        ans = ((i+2)/2)*(i/2+1)+((i+1)/2)*(i+1-(i/2+1));
+        if(ans>=n){
+            cout << i << "\n";
+            return 0;
+        }
     }
-    FOR(i, 2, n){
-        FOR(j, 1, n-i+1){
-            l = j; r = j+i-1;
-            FOR(k, l, r-1){
-                dp[l][r] = min(dp[l][r], dp[l][k]+dp[k+1][r]+sz[l][k]+sz[k+1][r]);
-                sz[l][r] = sz[l][r-1]+sz[r][r];
-            }
-            //  cout << l << " " << r << " " << dp[l][r] << "\n";
-        }  
-    }
-    cout << dp[1][n] << "\n";
     return 0;
-
 }
