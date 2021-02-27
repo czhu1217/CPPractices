@@ -8,16 +8,16 @@ typedef pair<ll, ll> pi;
 #define s second
 const ll MM = 2e5+5;
 ll n, w, d, u, v, sub[MM], dis[MM], c;
-ll ans=LLONG_MAX; vector<int> pos;
-vector<ll> adj[MM], adj2[MM];
-map<int, vector<int>> mp;
+ll ans=LLONG_MAX; map<ll, bool> pos;
+vector<ll>  adj2[MM];
+set<pi> se;
+
 bool vis[MM];
 int main(){
     cin >> n >> w >> d;
     FOR(i, 1, n) dis[i] = -1;
     FOR(i, 1, w){
         cin >> u >> v;
-            adj[u].pb(v); 
             adj2[v].pb(u);
     }
     FOR(i, 1, n){
@@ -37,26 +37,23 @@ int main(){
             }
         }
     }
-    // // FOR(i, 1, n) cout << dis[i] << " ";
     FOR(i, 1, n){
-        if(dis[sub[i]]<0) continue;
-        mp[i-1+dis[sub[i]]].pb(i);
+        if(dis[sub[i]]>=0)
+        se.insert({i-1+dis[sub[i]], sub[i]});
     }
+
     ll temp, x, y;
-    bool ok;
-    FOR(j, 1, d){
-        ok = 0;
+    FOR(i, 1, d){
+        ans = LLONG_MAX;
         cin >> x >> y;
+        se.erase({x-1+dis[sub[x]], sub[x]});
+        se.erase({y-1+dis[sub[y]], sub[y]});
         temp = sub[x];
         sub[x] = sub[y];
         sub[y] = temp;
-        
-        mp[x-1+dis[sub[x]]].pb(x);
-        mp[y-1+dis[sub[y]]].pb(y);
-        for(int i=mp.size()-1;i>=0;i--){
-            for(int j=0;j<mp[i].size();j++)
-        }
-
+        if(dis[sub[x]]>=0) se.insert({x-1+dis[sub[x]], sub[x]});
+        if(dis[sub[y]]>=0) se.insert({y-1+dis[sub[y]], sub[y]});
+        ans = (*se.begin()).f;
         cout << ans << "\n";
 
     }
