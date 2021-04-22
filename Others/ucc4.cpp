@@ -9,7 +9,8 @@
 #include <iostream>
 using namespace std;
 typedef long long ll;
-int n, a[5005]; int dp[5005];
+const int MM = 1e6+4;
+int n, a[MM]; int dp[MM];
 int sum3(int a, int b, int c){
     if(a>b)swap(a, b);
     if(a>c)swap(a, c);

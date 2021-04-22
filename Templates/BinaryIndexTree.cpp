@@ -11,3 +11,6 @@ void update(int pos, int v){
         bit[i]+=v ;
     }
 }
+
+const int MM = 1e9;
+int bit[MM];
