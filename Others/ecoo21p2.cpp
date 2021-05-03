@@ -26,35 +26,29 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-const ll MM = 1003, M = 1e6;
-ll n, a[MM*2], k;
+const int MM = 2e5+5;
+int n, m, k;
+int  best[MM], ans[MM];
 int main(){
-    cin >> n;
-    FOR(i, 1, n) cin >> a[i];
-    sort(a+1, a+1+n);
-    FOR(i, n+1, n*2){
-        a[i] = a[i-n] + M;
-    }
-    cin >> k;
-    ll lo = 0, hi = M;
-    ll st, mi;
-    while(lo!=hi){
-        ll mid = (lo+hi)/2;
-        // cout << mid << "\n";
-        mi = INT_MAX;
-        FOR(i, 1, n){
-            ll cnt = 0;
-            st = a[i]; cnt++;
-            FOR(j, i, i+n-1){
-                if(a[j]-st>2*mid){cnt++; st=a[j];}
-            }
-            mi = min(mi, cnt);
-            if(mi<=k) break;
+
+    cin >> n >> m >> k;
+    int a,b, c;
+    FOR(i, 1, k){
+        cin >> a >> b >> c;
+        if(c>best[b]){
+            best[b] = c;
+            ans[b] = a;
         }
-        if(mi <=k) hi = mid;
-        else lo = mid+1;
     }
-    cout << lo << "\n";
+    FOR(i,1, n){
+        if(!best[i]){
+            cout << -1 << " ";
+        }
+        else cout << ans[i] << " ";
+    }
+    cout << "\n";
+
+
 
     return 0;
 }
