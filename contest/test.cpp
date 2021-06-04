@@ -18,6 +18,7 @@ typedef vector<pl> vpl;
 #define F0Rd(i,a) for (ll i = (a)-1; i >= 0; i--)
  
 #define sz(x) (ll)(x).size()
+#define mp make_pair
 #define pb push_back
 #define f first
 #define s second
@@ -25,9 +26,9 @@ typedef vector<pl> vpl;
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
-
+string ai, bi;
 int main(){
- 
+    scanf("%s %s", &ai, &bi);
 
     return 0;
 }

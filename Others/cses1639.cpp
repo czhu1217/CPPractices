@@ -20,14 +20,37 @@ typedef vector<pl> vpl;
 #define sz(x) (ll)(x).size()
 #define pb push_back
 #define f first
-#define s second
 #define lb lower_bound
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
+const int MM = 5005;
+string a, bi;
+int cnt;
+int dp[MM][MM]; bool vis[MM][MM];
+void fun(int x, int y){
+    if(vis[x][y]) return;
+    vis[x][y] = 1;
+    if(x==0 || y==0){ dp[x][y] = x+y; return;}
+    if(a[x-1]==bi[y-1]){
+        fun(x-1, y-1); dp[x][y] = dp[x-1][y-1];
+    }
+    else{
+        fun(x-1, y); fun(x, y-1); fun(x-1, y-1);
+        dp[x][y] = min(dp[x-1][y], min( dp[x][y-1], dp[x-1][y-1]))+1;
+    }
 
+
+
+
+}
 int main(){
- 
+    memset(dp, 0x3f, sizeof dp);
+    cin >> a >> bi ;
+    
+    fun(a.size(), bi.size());
+    cout << dp[a.size()][bi.size()] << "\n";
+    
 
     return 0;
 }

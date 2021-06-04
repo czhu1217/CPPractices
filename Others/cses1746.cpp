@@ -20,14 +20,38 @@ typedef vector<pl> vpl;
 #define sz(x) (ll)(x).size()
 #define pb push_back
 #define f first
-#define s second
 #define lb lower_bound
 #define ub upper_bound
 #define all(x) x.begin(), x.end()
 #define ins insert
+const int MM = 500;
+string a, b;
+void fun(string s){
+    // if(mp[s]) return;
+    // ll ans = INT_MAX;
+    // if(s.size()==a.size()){
+    //     int cnt = 0;
+    //     FOR(i, 0, s.size()-1) if(s[i]!=a[i]) cnt++;
+    //     mp[s] = cnt;
+    //     return;
+    // }
+    // for(int i=0;i<s.size();i++){
+    //     string str = s.erase(i, 1);
+    //     fun(str);
+    //     ans = min(ans, (ll)mp[str]+1);
+    // }
+    // mp[s] = ans;
 
+
+
+}
 int main(){
- 
+    cin >> a >> b ;
+    if(a.size()>b.size()) swap(a, b);
+    //a is the needle, b is the heystack
+    fun(b);
+    // cout << mp[b] << "\n";
+    
 
     return 0;
 }
