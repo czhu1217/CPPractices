@@ -1,34 +1,28 @@
 #include <bits/stdc++.h>
-using namespace std; 
-typedef long long ll;
-typedef long double ld;
-typedef pair<ll, ll> pi;
-typedef pair<ll,ll> pl;
-typedef pair<ld,ld> pd;
- 
-typedef vector<ll> vi;
-typedef vector<ld> vd;
-typedef vector<ll> vl;
-typedef vector<pi> vpi;
-typedef vector<pl> vpl;
- 
-#define FOR(i, a, b) for (ll i=a; i<=(b); i++)
-#define F0R(i, a) for (ll i=0; i<(a); i++)
-#define FORd(i,a,b) for (ll i = (b)-1; i >= a; i--)
-#define F0Rd(i,a) for (ll i = (a)-1; i >= 0; i--)
- 
-#define sz(x) (ll)(x).size()
-#define mp make_pair
-#define pb push_back
-#define f first
-#define s second
-#define lb lower_bound
-#define ub upper_bound
-#define all(x) x.begin(), x.end()
-#define ins insert
-string ai, bi;
+using namespace std;
+const int MM = 5005;
+int L[MM][MM];
+string a, bi;
 int main(){
-    scanf("%s %s", &ai, &bi);
-
+    cin >> a >> bi;
+    int n = a.size(), m = bi.size();
+  
+    /* Following steps build L[m+1][n+1] in bottom up fashion. Note 
+      that L[i][j] contains length of LCS of X[0..i-1] and Y[0..j-1] */
+    for (int i = 0; i <= n ; i++) {
+        for (int j = 0; j <= m; j++) {
+            if (i == 0 || j == 0)
+                L[i][j] = 0;
+  
+            else if (a[i - 1] == bi[j - 1])
+                L[i][j] = L[i - 1][j - 1] + 1;
+  
+            else
+                L[i][j] = max(L[i - 1][j], L[i][j - 1]);
+        }
+    }
+  
+    cout << max(a.size(), bi.size()) - L[n][m] << "\n";
     return 0;
 }
+  
